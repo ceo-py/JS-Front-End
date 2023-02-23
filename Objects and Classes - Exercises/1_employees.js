@@ -1,6 +1,6 @@
 
 function solve(list){
-    let output = []
+    let output = {}
 
     for (let item of list){
         output[item] = item.length
