@@ -1,9 +1,6 @@
-function cityTaxes(...list){
+function cityTaxes(...list) {
     return {
-        name: list.shift(),
-        population: list.shift(),
-        treasury: list.shift(),
-        taxRate: 10,
+        name: list.shift(), population: list.shift(), treasury: list.shift(), taxRate: 10,
 
         collectTaxes: function () {
             this.treasury += this.population * this.taxRate
@@ -20,10 +17,7 @@ function cityTaxes(...list){
 }
 
 
-const city =
-  cityTaxes('Tortuga',
-  7000,
-  15000);
+const city = cityTaxes('Tortuga', 7000, 15000);
 city.collectTaxes();
 console.log(city.treasury);
 city.applyGrowth(5);

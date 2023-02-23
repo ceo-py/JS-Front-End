@@ -1,9 +1,6 @@
-
-function solve(...list){
+function solve(...list) {
     const person = {
-        name: list.shift(),
-        lastName: list.shift(),
-        hairColor: list.shift()
+        name: list.shift(), lastName: list.shift(), hairColor: list.shift()
     }
     console.log(JSON.stringify(person))
 }

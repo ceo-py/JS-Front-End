@@ -5,7 +5,7 @@ function solve(dict){
     //     console.log(`${key}: ${dict[key]}`);
     // }
 
-    for (const [key, value] of Object.entries(dict)){
+    for (const [key, value] of Object.entries(dict)) {
         console.log(`${key} -> ${value}`)
 
     }
