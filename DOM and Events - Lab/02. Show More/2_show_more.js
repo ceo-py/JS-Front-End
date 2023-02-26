@@ -1,3 +1,4 @@
 function showText() {
-    document.getElementById('text').style.display = 'block'
+    document.getElementById('text').style.display = 'inline'
+    document.getElementById('more').style.display = 'none'
 }
