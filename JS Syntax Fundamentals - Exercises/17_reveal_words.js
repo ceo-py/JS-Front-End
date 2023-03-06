@@ -15,3 +15,20 @@ function solve(words, string){
 
 
 solve('great', 'softuni is ***** place for learning new programming languages')
+
+
+
+
+// function solve(words, string){
+//     const wordList = words.split(', ')
+//     const wordMap = new Map(wordList.map(word => [word.length, word]))
+//
+//     const result = string.split(' ').map(word => {
+//         if (word[0] === '*' && wordMap.has(word.length)) {
+//             return wordMap.get(word.length)
+//         }
+//         return word
+//     })
+//
+//     console.log(result.join(' '))
+// }
