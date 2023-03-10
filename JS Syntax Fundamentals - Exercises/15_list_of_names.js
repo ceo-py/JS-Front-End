@@ -1,5 +1,5 @@
 function solve(list){
-    list.sort()
+    list.sort((a, b) => a.localeCompare(b))
     // for (let i=0; i < list.length; i++){
     //     console.log(`${i + 1}.${list[i]}`)
     // }
@@ -10,7 +10,7 @@ function solve(list){
         index++;
   }
 
-    // console.log(list.sort().map((name, index) => `${index + 1}.${name}`).join("\n"));
+    // console.log(list.sort((a, b) => a.localeCompare(b)).map((name, index) => `${index + 1}.${name}`).join("\n"));
 }
 
 
