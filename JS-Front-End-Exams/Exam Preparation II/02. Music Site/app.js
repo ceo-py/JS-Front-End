@@ -86,7 +86,6 @@ function solve() {
                     allHits.removeChild(div)
 
                 } else if (x.textContent === 'Like song' && !x.disabled) {
-                    console.log(likes.textContent)
                     const [text, counter] = likes.textContent.split(': ')
                     likes.textContent = `${text}: ${Number(counter) + 1}`
                     x.disabled = true
