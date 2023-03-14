@@ -64,8 +64,8 @@ function solve() {
 
     function removeBtns(div) {
         Array.from(['.save-btn', '.like-btn']).forEach(x => {
-                        div.removeChild(div.querySelector(x))
-                    })
+            div.removeChild(div.querySelector(x))
+        })
         return div
     }
 
