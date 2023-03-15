@@ -1,8 +1,8 @@
 {
-  "name": "01.bus-stop",
+  "name": "02.bus-schedule",
   "version": "1.0.0",
   "description": "",
-  "main": "1_bus_stop.js",
+  "main": "2_bus_schedule.js",
   "scripts": {
     "test": "mocha tests",
     "start": "http-server -a localhost -p 3000 -P http://localhost:3000? -c-1"
