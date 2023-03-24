@@ -1,54 +1,53 @@
 async function lockedProfile() {
-    const main = document.querySelector('#main')
+    const API_URL = 'http://localhost:3030/jsonstore/advanced/profiles'
     const profile = document.querySelector('.profile')
-    const profileApiUrl = 'http://localhost:3030/jsonstore/advanced/profiles'
-    
-    const getProfilesFromDB  = async () => {
-        const data = await fetch(profileApiUrl)
-        return data.json()
+    const main = document.querySelector('#main')
+
+    const loadDataFromApi = async () => {
+        const data = await fetch(API_URL)
+        return await data.json()
     }
-    
-    const showResult = async ()=> {
-        const [_, unlockBtn] = event.target.parentElement.querySelectorAll('input[type="radio"]')
-        if (unlockBtn.checked) {
-            const showInfo = unlockBtn.parentElement.querySelector('.user1Username')
-            const btn = event.target
-            if (showInfo.style.display === 'inline-block') {
-                showInfo.style.display = 'none'
-                btn.textContent = 'Show more'
-            } else {
-                showInfo.style.display = 'inline-block'
-                btn.textContent = 'Hide It'
-            }
+
+    const showMoreBtnFunctionality = () => {
+        const e = event.target.parentElement
+
+        const [lockCheck, unlockCheck] = e.querySelectorAll('input[type="radio"]')
+        const showIndo = e.querySelector('.user1Username')
+
+        if (unlockCheck.checked) {
+
+            showIndo.style.display = 'inline-block'
+            event.target.textContent = 'Hide it'
+        } else  {
+            showIndo.style.display = 'none'
+            event.target.textContent = 'Show more'
         }
     }
-    
-    const loadProfilesToHtml = async (profiles) => {
+
+    const createHtmlElement2 = (data) => {
+        const copyElement = profile.cloneNode(true)
+        const [name, email, age] = Array.from(copyElement.querySelectorAll('input')).slice(2)
+        const showIndo = copyElement.querySelector('.user1Username')
+
+
+        name.value = data.username
+        email.value = data.email
+        age.value = data.age
+        showIndo.style.display = 'none'
+
+        const showMoreBtn = copyElement.querySelector('button')
+        showMoreBtn.addEventListener('click', showMoreBtnFunctionality)
+
+
+        return copyElement
+    }
+
+    const loadDataToHTML = async (data) => {
         main.innerHTML = ''
-        for (const key in profiles) {
-            const cloneProfile = profile.cloneNode(true)
-            cloneProfile.setAttribute('id', key)
-            const showBtn = cloneProfile.querySelector('button')
-            const email = cloneProfile.querySelector('input[type="email"]')
-            const [userName, userAge] = cloneProfile.querySelectorAll('input[type="text"]')
-            const showResultData = cloneProfile.querySelector('.user1Username')
-            
-            showResultData.style.display = 'none'
-            
-            userName.value = profiles[key].username
-            email.value = profiles[key].email
-            userAge.value = profiles[key].age
-            
-            showBtn.addEventListener('click', await showResult)
-            
-            
-            main.appendChild(cloneProfile)
+
+        for (const key in data) {
+            main.appendChild(await createHtmlElement2(data[key]))
         }
     }
-    
-    await loadProfilesToHtml(await getProfilesFromDB())
-    
-    
-    
-    
+    await loadDataToHTML(await loadDataFromApi())
 }
