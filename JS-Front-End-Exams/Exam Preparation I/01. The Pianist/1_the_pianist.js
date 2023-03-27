@@ -3,10 +3,10 @@ function pianistCatalog(list) {
     list.pop()
     let catalog = {}
 
-    const Add = (pieceOrComposer, composerOrKey, key) => {
-        return catalog.hasOwnProperty(pieceOrComposer) ? `${pieceOrComposer} is already in the collection!` :
-            (catalog[pieceOrComposer] = new Piece(pieceOrComposer, composerOrKey, key),
-                `${pieceOrComposer} by ${composerOrKey} in ${key} added to the collection!`);
+    const Add = (piece, composer, key) => {
+        return catalog.hasOwnProperty(piece) ? `${piece} is already in the collection!` :
+            (catalog[piece] = new Piece(piece, composer, key),
+                `${piece} by ${composer} in ${key} added to the collection!`);
     }
 
     const Remove = (piece) => {
