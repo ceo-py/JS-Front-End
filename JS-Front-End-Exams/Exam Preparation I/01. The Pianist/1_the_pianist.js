@@ -6,7 +6,7 @@ function pianistCatalog(list) {
     const Add = (piece, composer, key) => {
         return catalog.hasOwnProperty(piece) ? `${piece} is already in the collection!` :
             (catalog[piece] = new Piece(piece, composer, key),
-                `${piece} by ${composer} in ${key} added to the collection!`);
+                `${piece} by ${composer} in ${key} added to the collection!`)
     }
 
     const Remove = (piece) => {
@@ -17,7 +17,7 @@ function pianistCatalog(list) {
     const ChangeKey = (piece, key) => {
         return catalog.hasOwnProperty(piece) ? (catalog[piece].changeKey(key),
                 `Changed the key of ${piece} to ${key}!`)
-            : `Invalid operation! ${piece} does not exist in the collection.`;
+            : `Invalid operation! ${piece} does not exist in the collection.`
     }
 
     const commands = {
@@ -37,7 +37,7 @@ function pianistCatalog(list) {
         }
 
         printInfo() {
-            console.log(`${this.piece} -> Composer: ${this.composer}, Key: ${this.key}`)
+             return`${this.piece} -> Composer: ${this.composer}, Key: ${this.key}`
         }
     }
 
@@ -51,7 +51,7 @@ function pianistCatalog(list) {
             console.log(commands[data.shift()](...data))
         }
     })
-    Object.values(catalog).forEach((piece) => piece.printInfo())
+    Object.values(catalog).forEach((piece) => console.log(piece.printInfo()))
 
 }
 
