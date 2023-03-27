@@ -1,180 +1,111 @@
-async function attachEvents() {
-    const dbBooks = 'http://localhost:3030/jsonstore/collections/books'
-    const loadBooksBtn = document.querySelector('#loadBooks')
-    const form = document.querySelector('#form')
-    const h3 = form.querySelector('h3')
-    const formBtn = document.querySelector('#form > button')
-    const tbody = document.querySelector('tbody')
-    const btnsInitial = [...document.querySelectorAll('td > button')]
-    let editObjectID = null
+function attachEvents() {
+    const loadAllBooksBtn = document.getElementById('loadBooks');
+    const BASE_URL = 'http://localhost:3030/jsonstore/collections/books/';
 
+    const titleInput = document.querySelector('input[name="title"]');
+    const authorInput = document.querySelector('input[name="author"]');
+    const formHeader = document.querySelector('#form h3');
 
-    const getInputFields = () => {
-        return Array.from(document.querySelectorAll('input[type="text"]'))
-    }
+    const tableBody = document.getElementsByTagName('tbody')[0];
+    const submitBtn = document.querySelector('#form button');
 
-    const createElementWithTextContent = (tag, textContent) => {
-        const e = document.createElement(tag)
-        e.textContent = textContent
-        return e
-    }
+    loadAllBooksBtn.addEventListener('click', loadAllBooks);
+    submitBtn.addEventListener('click', submitHandler);
 
-    const updateBookDB = async (id, name, author) => {
-        const text = {
-            author: author.value,
-            title: name.value
-        }
-        try {
-            await fetch(`${dbBooks}/${id}`, {
-                method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(text)
-            })
-        } catch (error) {
+    let booksData = {};
+    let editBookId = null;
 
-        }
-    }
+    async function loadAllBooks() {
+        tableBody.innerHTML = '';
+        const allBooksResponse = await fetch(BASE_URL);
+        const allBooksData = await allBooksResponse.json();
+        booksData = allBooksData;
 
-    const changeFormTitleAndButton = (h3Text, btnText) => {
-        h3.textContent = h3Text
-        formBtn.textContent = btnText
-    }
+        for (const bookId in allBooksData) {
+            const { author, title } = allBooksData[bookId];
 
-    const fromEditChange = (name, author) => {
-        const [nameFrom, authorForm] = getInputFields()
-        nameFrom.value = name
-        authorForm.value = author
-        changeFormTitleAndButton('Edit FORM', 'Save')
+            // Creating the new HTML elements
+            let tr = document.createElement('tr');
+            let tdTitle = document.createElement('td');
+            let tdAuthor = document.createElement('td');
+            let tdButtons = document.createElement('td');
+            let editBtn = document.createElement('button');
+            let deleteBtn = document.createElement('button');
 
+            // Setting element attributes
 
-    }
+            tdTitle.textContent = title;
+            tdAuthor.textContent = author;
+            editBtn.textContent = 'Edit';
+            deleteBtn.textContent = 'Delete';
+            editBtn.id = bookId;
+            deleteBtn.id = bookId;
 
-    const editBtnFunc = async (e) => {
-        const trContainer = e.target.parentElement.parentElement
-        const [name, autor] = Array.from(trContainer.querySelectorAll('td')).slice(0, 2)
-        fromEditChange(name.textContent, autor.textContent)
-        editObjectID = trContainer.id
+            // Adding click events
+            editBtn.addEventListener('click', loadEditForm);
+            deleteBtn.addEventListener('click', deleteBook);
 
-    }
-
-    const deleteBtnFunc = async (e) => {
-        const trContainer = e.target.parentElement.parentElement
-        tbody.removeChild(trContainer)
-        await deleteBookEntry(trContainer.id)
-
-    }
-
-    const deleteBookEntry = async (id) => {
-        try {
-            await fetch(`${dbBooks}/${id}`, {
-                method: 'DELETE'
-            })
-        } catch (error) {
+            // DOM Manipulations
+            tr.appendChild(tdTitle);
+            tr.appendChild(tdAuthor);
+            tdButtons.appendChild(editBtn);
+            tdButtons.appendChild(deleteBtn);
+            tr.appendChild(tdButtons);
+            tableBody.appendChild(tr);
 
         }
     }
 
-    const createBookInformation = async (data) => {
-        for (const key in data) {
-            const tr = document.createElement('tr')
-            tr.setAttribute('id', key)
-            tr.appendChild(createElementWithTextContent('td', `${data[key].title}`))
-            tr.appendChild(createElementWithTextContent('td', `${data[key].author}`))
-            const td = document.createElement('td')
-            const editBtn = createElementWithTextContent('button', 'Edit')
-            const deleteBtn = createElementWithTextContent('button', 'Delete')
-            editBtn.addEventListener('click', await editBtnFunc)
-            deleteBtn.addEventListener('click', await deleteBtnFunc)
-
-            td.appendChild(editBtn)
-            td.appendChild(deleteBtn)
-            tr.appendChild(td)
-            tbody.appendChild(tr)
-        }
-
+    function loadEditForm() {
+        editBookId = this.id;
+        formHeader.textContent = 'Edit FORM';
+        submitBtn.textContent = 'Save';
+        const bookById = booksData[this.id];
+        titleInput.value = bookById.title;
+        authorInput.value = bookById.author;
     }
 
-    const loadBooksFromDb = async () => {
-        tbody.innerHTML = ''
-        try {
-            const data = await fetch(dbBooks)
-            await createBookInformation(await data.json())
-        } catch (error) {
+    async function submitHandler() {
+        let title = titleInput.value;
+        let author = authorInput.value;
+
+        if (author === '' || title === '') {
+            alert('Please fill in all the required fields');
+            return;
         }
+
+        const httpHeaders = {
+            method: 'POST',
+            body: JSON.stringify({ title, author }),
+        }
+        let url = BASE_URL;
+
+        if (formHeader.textContent === 'Edit FORM') {
+            httpHeaders.method = 'PUT';
+            url += editBookId;
+        }
+
+        const resData = await fetch(url, httpHeaders);
+        loadAllBooks();
+
+        if (formHeader.textContent === 'Edit FORM') {
+            formHeader.textContent = 'FORM';
+            submitBtn.textContent = 'Submit';
+        }
+        titleInput.value = '';
+        authorInput.value = '';
     }
 
-    const createBookForDb = (inputFields) => {
-        return {
-            author: inputFields[0].value, title: inputFields[1].value
+    async function deleteBook() {
+        const id = this.id;
+        const httpHeaders = {
+            method: 'DELETE'
         }
+
+        await fetch(BASE_URL + id, httpHeaders);
+        loadAllBooks();
     }
-
-    const checkForCorrectInput = (inputFields) => {
-        for (const item of inputFields) {
-            if (!item.value.trim()) {
-                return false
-            }
-        }
-        return true
-    }
-
-    const clearInputFields = (inputFields) => {
-        inputFields.forEach(x => x.value = '')
-    }
-
-    const saveBookToDB = async (book) => {
-        try {
-            await fetch(dbBooks, {
-                method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(book)
-            })
-        } catch (error) {
-
-        }
-
-    }
-
-    const formBtnFunctionality = async () => {
-        const input = getInputFields()
-
-        if (!checkForCorrectInput(input)) {
-            return
-        }
-        if (formBtn.textContent === 'Submit') {
-            await saveBookToDB(createBookForDb(input))
-
-        } else if (formBtn.textContent === 'Save') {
-            changeFormTitleAndButton('FORM', 'Submit')
-            await updateBookDB(editObjectID, ...getInputFields())
-
-        }
-        clearInputFields(input)
-        await loadBooksFromDb()
-    }
-
-
-    loadBooksBtn.addEventListener('click', await loadBooksFromDb)
-
-    formBtn.addEventListener('click', await formBtnFunctionality)
-
-    btnsInitial.forEach(b => (b.addEventListener('click', async () => {
-        if (b.textContent === 'Edit') {
-            const elements = b.parentElement.parentElement
-            const [bookName, bookAuthor] = [elements.children[0], elements.children[1]]
-
-            const [name, author] = getInputFields()
-            name.value = bookName.textContent
-            author.value = bookAuthor.textContent
-
-            await saveBookToDB(createBookForDb(getInputFields()))
-
-            changeFormTitleAndButton('Edit FORM', 'Save')
-
-        } else if (b.textContent === 'Delete') {
-            b.parentElement.parentElement.remove()
-        }
-    })))
-
-    await loadBooksFromDb()
 
 }
 
 attachEvents();
-

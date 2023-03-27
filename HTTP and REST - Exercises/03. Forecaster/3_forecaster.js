@@ -1,115 +1,73 @@
-function attachEvents() {
-    const [location, submit] = Array.from(document.querySelectorAll('input'))
-    const current = document.querySelector('#current')
-    const upcoming = document.querySelector('#upcoming')
-    const forecast = document.querySelector('#forecast')
-    let correctWeather = false
-    const correctLocations = 'http://localhost:3030/jsonstore/forecaster/locations'
-    const todayWeatherAPI = 'http://localhost:3030/jsonstore/forecaster/today/'
-    const threeDayWeatherAPI = 'http://localhost:3030/jsonstore/forecaster/upcoming/'
+async function attachEvents() {
+    const submitBtn = document.getElementById('submit');
+    const location = document.getElementById('location');
+    const currentData = document.getElementById('current');
+    const upcomingData = document.getElementById('upcoming');
+    const BASE_URL = 'http://localhost:3030/jsonstore/forecaster/locations/';
+    const CURRENT_CONDITIONS_URL = 'http://localhost:3030/jsonstore/forecaster/today/';
+    const UPCOMING_URL = 'http://localhost:3030/jsonstore/forecaster/upcoming/';
 
-    const weatherIcons = {
-        'Sunny': '☀',
-        'Partly sunny': '⛅',
-        'Overcast': '☁',
-        'Rain': '☂',
-    }
+    let locationName = null;
+    let locationCode = null;
 
+    const weatherSymbols = {
+        'Sunny': '&#x2600',
+        'Partly sunny': '&#x26C5',
+        'Overcast': '&#x2601',
+        'Rain': '&#x2614',
+        'Degrees': '&#176',
+    };
 
-    function checkCorrectInputWeather(location) {
-        fetch(correctLocations).then(x => x.json()).then(x => {
-            x.forEach(e => {
-                if (e.name === location) {
-                    correctWeather = true
-                    fetch(`${todayWeatherAPI}${e.code}`).then(x => x.json()).then(x => {
-                        todayWeather(x)
-                    }).catch(() => {
-                        forecast.style.display = 'block'
-                        const p = document.createElement('p')
-                        p.textContent = 'Error'
-                        current.appendChild(p)
-                    })
-                    fetch(`${threeDayWeatherAPI}${e.code}`).then(x => x.json()).then(x => {
-                        threeDayWeather(x)
-                    }).catch()
+    submitBtn.addEventListener('click', async () => {
+        const searchedLocation = location.value;
+
+        try {
+            const response = await fetch(`${BASE_URL}`);
+            const data = await response.json();
+            for (const {code, name} of data) {
+                if (name === searchedLocation) {
+                    locationCode = code;
+                    locationName = name;
                 }
-            })
-        }).then(x => correctWeather === true ? '' : errorMsg()).catch()
-    }
+            }
 
+            if (locationName !== null) {
+                try {
+                    currentData.parentElement.style.display = 'block';
+                    const currentWeather = await fetch(`${CURRENT_CONDITIONS_URL}${locationCode}`);
+                    const currentDataWeather = await currentWeather.json();
+                    const weatherIconCode = currentDataWeather.forecast.condition;
+                    const iconCode = weatherSymbols[weatherIconCode];
+                    currentData.innerHTML = `
+                        <div class="forecasts">
+                            <span class="condition symbol">${iconCode}</span>
+                            <span class="condition">
+                                <span class="forecast-data">${currentDataWeather.name}</span>
+                                <span class="forecast-data">${currentDataWeather.forecast.low}&#176/${currentDataWeather.forecast.high}&#176</span>
+                                <span class="forecast-data">${weatherIconCode}</span>
+                            </span>
+                        </div>
+                        `;
 
-    function checkErrorDisplay(error) {
-        if (error) {
-            current.removeChild(error)
-        }
-    }
-
-    function errorMsg() {
-        const p = document.createElement('p')
-        p.textContent = 'Error'
-        forecast.style.display = 'block'
-        current.appendChild(p)
-    }
-
-
-    function createElementWithClassName(tag, className) {
-        const e = document.createElement(tag)
-        className.forEach(x => {
-            e.classList.add(x)
-        })
-        return e
-    }
-
-    function addTextContentToElementWithClass(tag, className, textContent) {
-        const e = createElementWithClassName(tag, className)
-        e.textContent = textContent
-        return e
-    }
-
-    function todayWeather(e) {
-        const div = createElementWithClassName('div', ['forecasts'])
-        const weatherType = weatherIcons[e.forecast.condition]
-
-        div.appendChild(addTextContentToElementWithClass('span', ['condition', 'symbol'], weatherType))
-
-        const span = createElementWithClassName('span', ['condition'])
-        span.appendChild(addTextContentToElementWithClass('span', ['forecast-data'], e.name))
-        span.appendChild(addTextContentToElementWithClass('span', ['forecast-data'], `${e.forecast.low}°/${e.forecast.high}°`))
-        span.appendChild(addTextContentToElementWithClass('span', ['forecast-data'], e.forecast.condition))
-
-        div.appendChild(span)
-
-        current.appendChild(div)
-        forecast.style.display = 'block;'
-
-    }
-
-    function threeDayWeather(e) {
-        const div = createElementWithClassName('div', ['forecast-into'])
-        const span = createElementWithClassName('span', ['upcoming'])
-        e.forecast.forEach(x => {
-            span.appendChild(addTextContentToElementWithClass('span', ['symbol'], weatherIcons[x.condition]))
-            span.appendChild(addTextContentToElementWithClass('span', ['forecast-data'], `${x.low}°/${x.high}°`))
-            span.appendChild(addTextContentToElementWithClass('span', ['forecast-data'], x.condition))
-        })
-        div.appendChild(span)
-        upcoming.appendChild(div)
-    }
-
-    function deleteOldResult(e) {
-        if (e) {
-            current.removeChild(e)
-            upcoming.removeChild(document.querySelector('.forecast-into'))
-        }
-
-    }
-
-    submit.addEventListener('click', () => {
-        forecast.style.display = 'none'
-        checkErrorDisplay(document.querySelector('#current > p'))
-        deleteOldResult(document.querySelector('.forecasts'))
-        checkCorrectInputWeather(location.value)
-    })
+                    const upcomingWeather = await fetch(`${UPCOMING_URL}${locationCode}`);
+                    const upcomingDataWeather = await upcomingWeather.json();
+                    const forecastInfoDiv = document.createElement('div');
+                    forecastInfoDiv.classList.add('forecast-info');
+                    for (const data of upcomingDataWeather.forecast) {
+                        const weatherIcon = weatherSymbols[data.condition];
+                        forecastInfoDiv.innerHTML += `
+                            <span class="upcoming">
+                                <span class="symbol">${weatherIcon}</span>
+                                <span class="forecast-data">${data.low}&#176/${data.high}&#176</span>
+                                <span class="forecast-data">${data.condition}</span>
+                            </span>
+                        `;
+                        upcomingData.appendChild(forecastInfoDiv);
+                    }
+                } catch (e) {
+                }
+            }
+        } catch (e) {}
+    });
 }
-
 attachEvents();
