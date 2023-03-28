@@ -1,47 +1,75 @@
 function shoppingList(list) {
-    let cart = list.shift().split('!')
+    const cart = list.shift().split('!')
+    list.pop()
 
-    function removeItem (item) {
-        cart.splice(cart.indexOf(item), 1)
-    }
+    const removeItem = (item) => cart.splice(cart.indexOf(item), 1)
 
-    list.forEach((x) => {
-        let [command, item, newItem] = x.split(' ')
+    const Urgent = (item) => !cart.includes(item) ? cart.unshift(item) : null
 
-        if (command === 'Urgent') {
+    const Unnecessary = (item) => cart.includes(item) ? removeItem(item): null
 
-            if (!cart.includes(item)) {
-                cart.unshift(item)
-            }
+    const Correct = (item, newItem) => cart.includes(item) ? cart[cart.indexOf(item)] = newItem : null
 
-        } else if (command === 'Unnecessary') {
+    const Rearrange = (item) => cart.includes(item) && (removeItem(item), cart.push(item))
 
-            if (cart.includes(item)) {
-                removeItem(item)
-            }
-        } else if (command === 'Correct') {
+    const commands = {Urgent, Unnecessary, Correct, Rearrange}
 
-            if (cart.includes(item)) {
-                cart[cart.indexOf(item)] = newItem
-            }
-        } else if (command === 'Rearrange') {
+    list.forEach((x) => {const [command, ...items] = x.split(' '); commands[command](...items);})
 
-            if (cart.includes(item)) {
-                removeItem(item)
-                cart.push(item)
-            }
-        } else {
-            console.log(`${cart.join(', ')}`)
-        }
-    })
+     console.log(`${cart.join(', ')}`)
 }
 
+
+
+
+
+
+
+
+// function shoppingList(list) {
+//     let cart = list.shift().split('!')
+//
+//     function removeItem (item) {
+//         cart.splice(cart.indexOf(item), 1)
+//     }
+//
+//     list.forEach((x) => {
+//         let [command, item, newItem] = x.split(' ')
+//
+//         if (command === 'Urgent') {
+//
+//             if (!cart.includes(item)) {
+//                 cart.unshift(item)
+//             }
+//
+//         } else if (command === 'Unnecessary') {
+//
+//             if (cart.includes(item)) {
+//                 removeItem(item)
+//             }
+//         } else if (command === 'Correct') {
+//
+//             if (cart.includes(item)) {
+//                 cart[cart.indexOf(item)] = newItem
+//             }
+//         } else if (command === 'Rearrange') {
+//
+//             if (cart.includes(item)) {
+//                 removeItem(item)
+//                 cart.push(item)
+//             }
+//         } else {
+//             console.log(`${cart.join(', ')}`)
+//         }
+//     })
+// }
+
 shoppingList(["Milk!Pepper!Salt!Water!Banana",
-"Urgent Salt",
-"Unnecessary Grapes",
-"Correct Pepper Onion",
-"Rearrange Milk",
-"Correct Milk Promqna",
-"Correct Tomatoes Potatoes",
-"Go Shopping!"])
+    "Urgent Salt",
+    "Unnecessary Grapes",
+    "Correct Pepper Onion",
+    "Rearrange Milk",
+    "Correct Milk Promqna",
+    "Correct Tomatoes Potatoes",
+    "Go Shopping!"])
 
