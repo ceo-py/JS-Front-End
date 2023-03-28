@@ -1,26 +1,39 @@
 function shoppingList(list) {
     const cart = list.shift().split('!')
-    list.pop()
-
     const removeItem = (item) => cart.splice(cart.indexOf(item), 1)
-
-    const Urgent = (item) => !cart.includes(item) ? cart.unshift(item) : null
-
-    const Unnecessary = (item) => cart.includes(item) ? removeItem(item): null
-
-    const Correct = (item, newItem) => cart.includes(item) ? cart[cart.indexOf(item)] = newItem : null
-
-    const Rearrange = (item) => cart.includes(item) && (removeItem(item), cart.push(item))
-
-    const commands = {Urgent, Unnecessary, Correct, Rearrange}
-
+    const commands = {
+        Urgent: (item) => !cart.includes(item) ? cart.unshift(item) : null,
+        Unnecessary: (item) => cart.includes(item) ? removeItem(item) : null,
+        Correct: (item, newItem) => cart.includes(item) ? cart[cart.indexOf(item)] = newItem : null,
+        Rearrange: (item) => cart.includes(item) && (removeItem(item), cart.push(item)),
+        'Go': (_) => console.log(cart.join(', '))}
     list.forEach((x) => {const [command, ...items] = x.split(' '); commands[command](...items);})
-
-     console.log(`${cart.join(', ')}`)
 }
 
 
 
+
+
+// function shoppingList(list) {
+//     const cart = list.shift().split('!')
+//     list.pop()
+//
+//     const removeItem = (item) => cart.splice(cart.indexOf(item), 1)
+//
+//     const Urgent = (item) => !cart.includes(item) ? cart.unshift(item) : null
+//
+//     const Unnecessary = (item) => cart.includes(item) ? removeItem(item): null
+//
+//     const Correct = (item, newItem) => cart.includes(item) ? cart[cart.indexOf(item)] = newItem : null
+//
+//     const Rearrange = (item) => cart.includes(item) && (removeItem(item), cart.push(item))
+//
+//     const commands = {Urgent, Unnecessary, Correct, Rearrange}
+//
+//     list.forEach((x) => {const [command, ...items] = x.split(' '); commands[command](...items);})
+//
+//      console.log(`${cart.join(', ')}`)
+// }
 
 
 
