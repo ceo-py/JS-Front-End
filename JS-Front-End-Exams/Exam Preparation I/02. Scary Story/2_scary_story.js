@@ -5,32 +5,34 @@ function solve() {
     const publishBtn = document.querySelector('#form-btn')
 
 
-    const createElement = (tag, textContent = '', value = '', className = [], attributes = {}, buttonEven = {}) => {
-        const e = document.createElement(tag)
-        e.textContent = textContent
-        e.value = value
-        className.forEach(x => e.classList.add(x))
+    const createElement = ({tag, textContent = '', value = '', className = [], attributes = {}, buttonEven = {}}) => {
+        const e = document.createElement(tag);
+        e.textContent = textContent;
+        e.value = value;
+        className.forEach(x => e.classList.add(x));
         for (const [key, value] of Object.entries(attributes)) {
-            e.setAttribute(key, value)
+            e.setAttribute(key, value);
         }
         for (const [key, value] of Object.entries(buttonEven)) {
-            e.addEventListener(key, value)
+            e.addEventListener(key, value);
         }
-        return e
-    }
+        return e;
+    };
 
     const checkCorrectInputs = (dataFromInput) => dataFromInput.every(item => item.value.trim().length !== 0);
 
     const clearInputFields = (dataFromInput => dataFromInput.forEach(x => x.value = ''))
-    
-    const splitData = (data) => {return data.split(': ').slice(1)[0]}
+
+    const splitData = (data) => {
+        return data.split(': ').slice(1)[0]
+    }
 
     const deleteElement = (element, toDeleteFrom) => toDeleteFrom.removeChild(element)
 
     const saveBtnFunctionality = () => {
         const main = document.querySelector('#main')
         main.innerHTML = ''
-        main.appendChild(createElement('h1', 'Your scary story is saved!'))
+        main.appendChild(createElement({tag: 'h1', textContent: 'Your scary story is saved!'}))
     }
 
     const editBtnFunctionality = () => {
@@ -52,32 +54,32 @@ function solve() {
         publishBtn.disabled = false
         deleteElement(document.querySelector('.story-info'), previewList)
     }
-    
+
     publishBtn.addEventListener('click', () => {
         if (!checkCorrectInputs(dataFromInput)) {
             return
         }
 
         publishBtn.disabled = true
-        const li = createElement('li', '', '', ['story-info'])
-        const article = createElement('article')
-        article.appendChild(createElement('h4', `Name: ${firstName.value} ${lastName.value}`))
-        article.appendChild(createElement('p', `Age: ${age.value}`))
-        article.appendChild(createElement('p', `Title: ${storyTitle.value}`))
-        article.appendChild(createElement('p', `Genre: ${genre.value}`))
-        article.appendChild(createElement('p', story.value))
+        const li = createElement({tag: 'li', className: ['story-info']})
+        const article = createElement({tag: 'article'})
+        article.appendChild(createElement({tag: 'h4', textContent: `Name: ${firstName.value} ${lastName.value}`}))
+        article.appendChild(createElement({tag: 'p', textContent: `Age: ${age.value}`}))
+        article.appendChild(createElement({tag: 'p', textContent: `Title: ${storyTitle.value}`}))
+        article.appendChild(createElement({tag: 'p', textContent: `Genre: ${genre.value}`}))
+        article.appendChild(createElement({tag: 'p', textContent: story.value}))
         li.appendChild(article)
 
-        const saveBtn = createElement('button', 'Save Story', '', ['save-btn'], '', {click: saveBtnFunctionality})
-        const editBtn = createElement('button', 'Edit Story', '', ['edit-btn'], '', {click: editBtnFunctionality})
-        const deleteBtn = createElement('button', 'Delete Story', '', ['delete-btn'], '', {click: deleteBtnFunctionality})
-        
+        const saveBtn = createElement({tag: 'button', textContent: 'Save Story', className: ['save-btn'], buttonEven: {click: saveBtnFunctionality}})
+        const editBtn = createElement({tag: 'button', textContent: 'Edit Story', className: ['edit-btn'], buttonEven: {click: editBtnFunctionality}})
+        const deleteBtn = createElement({tag: 'button', textContent: 'Delete Story', className: ['delete-btn'], buttonEven: {click: deleteBtnFunctionality}})
+
         li.appendChild(saveBtn)
         li.appendChild(editBtn)
         li.appendChild(deleteBtn)
-        
+
         previewList.appendChild(li)
-        
+
         clearInputFields(dataFromInput)
     })
 }
