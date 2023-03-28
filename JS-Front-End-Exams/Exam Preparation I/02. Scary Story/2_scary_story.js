@@ -22,10 +22,8 @@ function solve() {
     const checkCorrectInputs = (dataFromInput) => dataFromInput.every(item => item.value.trim().length !== 0)
 
     const clearInputFields = (dataFromInput => dataFromInput.forEach(x => x.value = ''))
-
-    const splitData = (data) => {
-        return data.split(': ').slice(1)[0]
-    }
+    
+    const splitData = (data) => data.split(': ').slice(1)[0]
 
     const deleteElement = (element, toDeleteFrom) => toDeleteFrom.removeChild(element)
 
@@ -56,9 +54,7 @@ function solve() {
     }
 
     publishBtn.addEventListener('click', () => {
-        if (!checkCorrectInputs(dataFromInput)) {
-            return
-        }
+        if (!checkCorrectInputs(dataFromInput)) return
 
         publishBtn.disabled = true
         const li = createElement({tag: 'li', className: ['story-info']})
