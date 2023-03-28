@@ -1,6 +1,5 @@
 function solve() {
-    const dataFromInput = Array.from(document.querySelectorAll('#first-name, #last-name, #age, #story-title, #genre, #story'))
-    const [firstName, lastName, age, storyTitle, genre, story] = dataFromInput
+    const [firstName, lastName, age, storyTitle, genre, story] = Array.from(document.querySelectorAll('#first-name, #last-name, #age, #story-title, #genre, #story'))
     const previewList = document.querySelector('#preview-list')
     const publishBtn = document.querySelector('#form-btn')
 
@@ -54,7 +53,7 @@ function solve() {
     }
 
     publishBtn.addEventListener('click', () => {
-        if (!checkCorrectInputs(dataFromInput)) return
+        if (!checkCorrectInputs([firstName, lastName, age, storyTitle, genre, story])) return
 
         publishBtn.disabled = true
         const li = createElement({tag: 'li', className: ['story-info']})
@@ -76,7 +75,7 @@ function solve() {
 
         previewList.appendChild(li)
 
-        clearInputFields(dataFromInput)
+        clearInputFields([firstName, lastName, age, storyTitle, genre, story])
     })
 }
 
