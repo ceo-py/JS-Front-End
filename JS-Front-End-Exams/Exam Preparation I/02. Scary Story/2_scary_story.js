@@ -6,20 +6,20 @@ function solve() {
 
 
     const createElement = ({tag, textContent = '', value = '', className = [], attributes = {}, buttonEven = {}}) => {
-        const e = document.createElement(tag);
-        e.textContent = textContent;
-        e.value = value;
-        className.forEach(x => e.classList.add(x));
+        const e = document.createElement(tag)
+        e.textContent = textContent
+        e.value = value
+        className.forEach(x => e.classList.add(x))
         for (const [key, value] of Object.entries(attributes)) {
-            e.setAttribute(key, value);
+            e.setAttribute(key, value)
         }
         for (const [key, value] of Object.entries(buttonEven)) {
-            e.addEventListener(key, value);
+            e.addEventListener(key, value)
         }
-        return e;
+        return e
     };
 
-    const checkCorrectInputs = (dataFromInput) => dataFromInput.every(item => item.value.trim().length !== 0);
+    const checkCorrectInputs = (dataFromInput) => dataFromInput.every(item => item.value.trim().length !== 0)
 
     const clearInputFields = (dataFromInput => dataFromInput.forEach(x => x.value = ''))
 
