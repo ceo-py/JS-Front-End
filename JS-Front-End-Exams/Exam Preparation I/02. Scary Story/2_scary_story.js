@@ -7,8 +7,8 @@ function solve() {
 
     const createElement = ({tag, textContent = '', value = '', className = [], attributes = {}, buttonEven = {}}) => {
         const e = document.createElement(tag)
-        e.textContent = textContent
-        e.value = value
+        if (textContent) e.textContent = textContent
+        if (value) e.value = value
         className.forEach(x => e.classList.add(x))
         for (const [key, value] of Object.entries(attributes)) {
             e.setAttribute(key, value)
@@ -17,7 +17,7 @@ function solve() {
             e.addEventListener(key, value)
         }
         return e
-    };
+    }
 
     const checkCorrectInputs = (dataFromInput) => dataFromInput.every(item => item.value.trim().length !== 0)
 
