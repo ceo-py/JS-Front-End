@@ -1,7 +1,22 @@
+window.addEventListener("load", solve);
+
 function solve() {
-    const [firstName, lastName, age, storyTitle, genre, story] = Array.from(document.querySelectorAll('#first-name, #last-name, #age, #story-title, #genre, #story'))
-    const previewList = document.querySelector('#preview-list')
-    const publishBtn = document.querySelector('#form-btn')
+    const inputFields = {
+        firstName: document.querySelector('#first-name'),
+        lastName: document.querySelector('#last-name'),
+        age: document.querySelector('#age'),
+        title: document.querySelector('#story-title'),
+        genre: document.querySelector('#genre'),
+        story: document.querySelector('#story'),
+    }
+
+    const storyApp = {
+        publishButton: document.querySelector('#form-btn'),
+        preview: document.querySelector('#preview-list'),
+        saveStory: document.querySelector('#main'),
+    }
+
+    let saveData = []
 
 
     const createElement = ({tag, textContent = '', value = '', className = [], attributes = {}, buttonEven = {}}) => {
@@ -21,65 +36,150 @@ function solve() {
     const checkCorrectInputs = (dataFromInput) => dataFromInput.every(item => item.value.trim().length !== 0)
 
     const clearInputFields = (dataFromInput => dataFromInput.forEach(x => x.value = ''))
-    
-    const splitData = (data) => data.split(': ').slice(1)[0]
 
-    const deleteElement = (element, toDeleteFrom) => toDeleteFrom.removeChild(element)
 
     const saveBtnFunctionality = () => {
-        const main = document.querySelector('#main')
-        main.innerHTML = ''
-        main.appendChild(createElement({tag: 'h1', textContent: 'Your scary story is saved!'}))
+        storyApp.saveStory.innerHTML =''
+        storyApp.saveStory.appendChild(createElement({tag: 'h1', textContent: 'Your scary story is saved!'}))
+
     }
 
-    const editBtnFunctionality = () => {
-        const [nameEdit, ageEdit, storyTitleEdit, genreEdit, storyEdit] = Array.from(document.querySelectorAll('h4, p'))
-        const [fName, lName] = splitData(nameEdit.textContent).split(' ')
-
-        firstName.value = fName
-        lastName.value = lName
-        age.value = splitData(ageEdit.textContent)
-        storyTitle.value = splitData(storyTitleEdit.textContent)
-        genre.value = splitData(genreEdit.textContent)
-        story.value = storyEdit.textContent
-
-        publishBtn.disabled = false
-        deleteElement(document.querySelector('.story-info'), previewList)
+    const editBtnFunctionality = (event) => {
+        const parentElement = event.currentTarget.parentElement
+        Object.values(inputFields).forEach((x, index) => x.value = saveData[index])
+        storyApp.publishButton.disabled = false
+        parentElement.remove()
     }
 
-    const deleteBtnFunctionality = () => {
-        publishBtn.disabled = false
-        deleteElement(document.querySelector('.story-info'), previewList)
+    const deleteBtnFunctionality = (event) => {
+        const parentElement = event.currentTarget.parentElement
+        parentElement.remove()
+        storyApp.publishButton.disabled = false
     }
 
-    publishBtn.addEventListener('click', () => {
-        if (!checkCorrectInputs([firstName, lastName, age, storyTitle, genre, story])) return
 
-        publishBtn.disabled = true
+    const createStoryElement = (inputFields) => {
         const li = createElement({tag: 'li', className: ['story-info']})
         const article = createElement({tag: 'article'})
-        article.appendChild(createElement({tag: 'h4', textContent: `Name: ${firstName.value} ${lastName.value}`}))
-        article.appendChild(createElement({tag: 'p', textContent: `Age: ${age.value}`}))
-        article.appendChild(createElement({tag: 'p', textContent: `Title: ${storyTitle.value}`}))
-        article.appendChild(createElement({tag: 'p', textContent: `Genre: ${genre.value}`}))
-        article.appendChild(createElement({tag: 'p', textContent: story.value}))
+        article.appendChild(createElement({tag: 'h4', textContent: `Name: ${inputFields.firstName.value} ${inputFields.lastName.value}`}))
+        article.appendChild(createElement({tag: 'p', textContent: `Age: ${inputFields.age.value}`}))
+        article.appendChild(createElement({tag: 'p', textContent: `Title: ${inputFields.title.value}`}))
+        article.appendChild(createElement({tag: 'p', textContent: `Genre: ${inputFields.genre.value}`}))
+        article.appendChild(createElement({tag: 'p', textContent: inputFields.story.value}))
         li.appendChild(article)
+        li.appendChild(createElement({tag: 'button', textContent: 'Save Story', className: ['save-btn'], buttonEven:{click: saveBtnFunctionality}}))
+        li.appendChild(createElement({tag: 'button', textContent: 'Edit Story', className: ['edit-btn'], buttonEven:{click: editBtnFunctionality}}))
+        li.appendChild(createElement({tag: 'button', textContent: 'Delete Story', className: ['delete-btn'], buttonEven:{click: deleteBtnFunctionality}}))
+        return li
+    }
 
-        const saveBtn = createElement({tag: 'button', textContent: 'Save Story', className: ['save-btn'], buttonEven: {click: saveBtnFunctionality}})
-        const editBtn = createElement({tag: 'button', textContent: 'Edit Story', className: ['edit-btn'], buttonEven: {click: editBtnFunctionality}})
-        const deleteBtn = createElement({tag: 'button', textContent: 'Delete Story', className: ['delete-btn'], buttonEven: {click: deleteBtnFunctionality}})
 
-        li.appendChild(saveBtn)
-        li.appendChild(editBtn)
-        li.appendChild(deleteBtn)
+    const publishButtonFunctionality = (event) => {
+        event.preventDefault()
+        const data = Object.values(inputFields)
 
-        previewList.appendChild(li)
+        if (!checkCorrectInputs(data)) return
+        saveData = []
 
-        clearInputFields([firstName, lastName, age, storyTitle, genre, story])
-    })
+        storyApp.preview.appendChild(createStoryElement(inputFields))
+
+        data.forEach(x=> saveData.push(x.value))
+
+        clearInputFields(data)
+        storyApp.publishButton.disabled = true
+    }
+
+
+    storyApp.publishButton.addEventListener("click", publishButtonFunctionality)
+
 }
 
-solve()
+
+
+
+
+// function solve() {
+//     const [firstName, lastName, age, storyTitle, genre, story] = Array.from(document.querySelectorAll('#first-name, #last-name, #age, #story-title, #genre, #story'))
+//     const previewList = document.querySelector('#preview-list')
+//     const publishBtn = document.querySelector('#form-btn')
+//
+//
+//     const createElement = ({tag, textContent = '', value = '', className = [], attributes = {}, buttonEven = {}}) => {
+//         const e = document.createElement(tag)
+//         if (textContent) e.textContent = textContent
+//         if (value) e.value = value
+//         className.forEach(x => e.classList.add(x))
+//         for (const [key, value] of Object.entries(attributes)) {
+//             e.setAttribute(key, value)
+//         }
+//         for (const [key, value] of Object.entries(buttonEven)) {
+//             e.addEventListener(key, value)
+//         }
+//         return e
+//     }
+//
+//     const checkCorrectInputs = (dataFromInput) => dataFromInput.every(item => item.value.trim().length !== 0)
+//
+//     const clearInputFields = (dataFromInput => dataFromInput.forEach(x => x.value = ''))
+//
+//     const splitData = (data) => data.split(': ').slice(1)[0]
+//
+//     const deleteElement = (element, toDeleteFrom) => toDeleteFrom.removeChild(element)
+//
+//     const saveBtnFunctionality = () => {
+//         const main = document.querySelector('#main')
+//         main.innerHTML = ''
+//         main.appendChild(createElement({tag: 'h1', textContent: 'Your scary story is saved!'}))
+//     }
+//
+//     const editBtnFunctionality = () => {
+//         const [nameEdit, ageEdit, storyTitleEdit, genreEdit, storyEdit] = Array.from(document.querySelectorAll('h4, p'))
+//         const [fName, lName] = splitData(nameEdit.textContent).split(' ')
+//
+//         firstName.value = fName
+//         lastName.value = lName
+//         age.value = splitData(ageEdit.textContent)
+//         storyTitle.value = splitData(storyTitleEdit.textContent)
+//         genre.value = splitData(genreEdit.textContent)
+//         story.value = storyEdit.textContent
+//
+//         publishBtn.disabled = false
+//         deleteElement(document.querySelector('.story-info'), previewList)
+//     }
+//
+//     const deleteBtnFunctionality = () => {
+//         publishBtn.disabled = false
+//         deleteElement(document.querySelector('.story-info'), previewList)
+//     }
+//
+//     publishBtn.addEventListener('click', () => {
+//         if (!checkCorrectInputs([firstName, lastName, age, storyTitle, genre, story])) return
+//
+//         publishBtn.disabled = true
+//         const li = createElement({tag: 'li', className: ['story-info']})
+//         const article = createElement({tag: 'article'})
+//         article.appendChild(createElement({tag: 'h4', textContent: `Name: ${firstName.value} ${lastName.value}`}))
+//         article.appendChild(createElement({tag: 'p', textContent: `Age: ${age.value}`}))
+//         article.appendChild(createElement({tag: 'p', textContent: `Title: ${storyTitle.value}`}))
+//         article.appendChild(createElement({tag: 'p', textContent: `Genre: ${genre.value}`}))
+//         article.appendChild(createElement({tag: 'p', textContent: story.value}))
+//         li.appendChild(article)
+//
+//         const saveBtn = createElement({tag: 'button', textContent: 'Save Story', className: ['save-btn'], buttonEven: {click: saveBtnFunctionality}})
+//         const editBtn = createElement({tag: 'button', textContent: 'Edit Story', className: ['edit-btn'], buttonEven: {click: editBtnFunctionality}})
+//         const deleteBtn = createElement({tag: 'button', textContent: 'Delete Story', className: ['delete-btn'], buttonEven: {click: deleteBtnFunctionality}})
+//
+//         li.appendChild(saveBtn)
+//         li.appendChild(editBtn)
+//         li.appendChild(deleteBtn)
+//
+//         previewList.appendChild(li)
+//
+//         clearInputFields([firstName, lastName, age, storyTitle, genre, story])
+//     })
+// }
+//
+// solve()
 
 
 //
