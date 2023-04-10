@@ -1,12 +1,6 @@
 function springReview(list) {
     const inputs = list.shift()
     const taskBoard = {}
-    const keyDontExist = (key) => {
-        if (!taskBoard.hasOwnProperty(key)) {
-            console.log(`Assignee ${key} does not exist on the board!`)
-            return true
-        }
-    }
 
     for (const i in list) {
         const info = list[i].split(':')
@@ -16,7 +10,10 @@ function springReview(list) {
                 taskId: info[1], title: info[2], status: info[3], estimatedPoints: Number(info[4]),
             })
         } else {
-            if (keyDontExist(info[1])) continue
+            if (!taskBoard.hasOwnProperty(info[1])) {
+                console.log(`Assignee ${info[1]} does not exist on the board!`)
+                continue
+            }
             if (info[0] === 'Add New') {
                 taskBoard[info[1]].push({
                     taskId: info[2], title: info[3], status: info[4], estimatedPoints: Number(info[5]),
