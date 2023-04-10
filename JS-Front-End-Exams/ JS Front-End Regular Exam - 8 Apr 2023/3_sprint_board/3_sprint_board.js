@@ -12,7 +12,6 @@ function attachEvents() {
         done: document.querySelector('#done-section ul'),
         createBtn: document.querySelector('#create-task-btn'),
         loadBtn: document.querySelector('#load-board-btn'),
-
     }
 
     const board = {
@@ -83,18 +82,10 @@ function attachEvents() {
         if (textContent) e.textContent = textContent
         if (value) e.value = value
         className.forEach(x => e.classList.add(x))
-        for (const [key, value] of Object.entries(attributes)) {
-            e.setAttribute(key, value)
-        }
-        for (const [key, value] of Object.entries(buttonEvent)) {
-            e.addEventListener(key, value)
-        }
-        if (parent) {
-            parent.appendChild(e)
-        } else {
-            return e
-        }
-
+        Object.entries(attributes).forEach(([key, value]) => e.setAttribute(key, value))
+        Object.entries(buttonEvent).forEach(([key, value]) => e.addEventListener(key, value))
+        if (parent) parent.appendChild(e)
+        return e
     }
 
     const clearInputFields = (dataFromInput => dataFromInput.forEach(x => x.value = ''))
@@ -148,8 +139,7 @@ function attachEvents() {
 
     const loadApiDataToHtml = (data) => {
         Object.values(board).forEach(x => x.html.innerHTML = '')
-        for (const item of Object.values(data))
-            board[item.status].html.appendChild(createHtmlTaskElement(item))
+        Object.values(data).forEach(x => board[x.status].html.appendChild(createHtmlTaskElement(x)))
     }
 
     const loadBtnFunctionality = async (event) => {
