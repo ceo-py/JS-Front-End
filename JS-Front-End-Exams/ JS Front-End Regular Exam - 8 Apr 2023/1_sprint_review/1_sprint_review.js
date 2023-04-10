@@ -10,6 +10,7 @@ function springReview(list) {
 
     for (const i in list) {
         const info = list[i].split(':')
+        if (keyDontExist(info[1])) continue
         if (i < inputs) {
             if (!taskBoard.hasOwnProperty(info[0])) taskBoard[info[0]] = []
             taskBoard[info[0]].push({
@@ -18,13 +19,11 @@ function springReview(list) {
 
         } else {
             if (info[0] === 'Add New') {
-                if (keyDontExist(info[1])) continue
                 taskBoard[info[1]].push({
                     taskId: info[2], title: info[3], status: info[4], estimatedPoints: Number(info[5]),
                 })
 
             } else if (info[0] === 'Change Status') {
-                if (keyDontExist(info[1])) continue
                 const task = taskBoard[info[1]].filter(x => x.taskId === info[2])
                 if (task.length === 0) {
                     console.log(`Task with ID ${info[2]} does not exist for ${info[1]}!`)
@@ -32,7 +31,6 @@ function springReview(list) {
                 }
                 task[0].status = info[3]
             } else if (info[0] === 'Remove Task') {
-                if (keyDontExist(info[1])) continue
                 const index = Number(info[2])
                 if (index < 0 || taskBoard[info[1]].length < index) {
                     console.log('Index is out of range!')
