@@ -65,16 +65,15 @@ function attachEvents() {
             options.body = JSON.stringify(item)
         }
         const data = await fetch(`${url}${id}`, options)
+        clearInputFields(Object.values(inputFields))
         return await data.json()
     }
-    
+
 
     const clearInputFields = (dataFromInput => dataFromInput.forEach(x => x.value = ''))
 
 
     const createBtnFunctionality = async (event) => {
-        event.preventDefault()
-
         await apiRequest({
             url: API_URL,
             method: 'POST',
@@ -84,7 +83,6 @@ function attachEvents() {
                 status: 'ToDo'
             }
         })
-        clearInputFields(Object.values(inputFields))
         loadApiDataToHtml(await apiRequest({
             url: API_URL,
             method: 'GET'
@@ -94,11 +92,7 @@ function attachEvents() {
     const createHtmlTaskElement = (data) => {
         const li = document.createElement('li')
         li.classList.add('task');
-        li.innerHTML =`
-                        <h3>${data.title}</h3>
-                        <p>${data.description}</p>
-                        <button id="${data._id}">${board[data.status].btnText}</button>
-                    `
+        li.innerHTML =`<h3>${data.title}</h3><p>${data.description}</p><button id="${data._id}">${board[data.status].btnText}</button>`
         li.querySelector('button').addEventListener('click', moveBtnFunctionality)
         return li
     }
@@ -122,8 +116,6 @@ function attachEvents() {
 }
 
 
-
-// no inner html
 // function attachEvents() {
 //     const API_URL = 'http://localhost:3030/jsonstore/tasks/'
 //     const inputFields = {
@@ -191,6 +183,7 @@ function attachEvents() {
 //             options.body = JSON.stringify(item)
 //         }
 //         const data = await fetch(`${url}${id}`, options)
+//         clearInputFields(Object.values(inputFields))
 //         return await data.json()
 //     }
 //
@@ -229,7 +222,6 @@ function attachEvents() {
 //                 status: 'ToDo'
 //             }
 //         })
-//         clearInputFields(Object.values(inputFields))
 //         loadApiDataToHtml(await apiRequest({
 //             url: API_URL,
 //             method: 'GET'
