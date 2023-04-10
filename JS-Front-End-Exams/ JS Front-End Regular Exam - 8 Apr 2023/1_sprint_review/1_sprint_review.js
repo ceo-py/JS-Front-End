@@ -18,10 +18,7 @@ function springReview(list) {
 
         } else {
             if (info[0] === 'Add New') {
-                if (!taskBoard.hasOwnProperty(info[1])) {
-                    console.log(`Assignee ${info[1]} does not exist on the board!`)
-                    continue
-                }
+                if (keyDontExist(info[1])) continue
                 taskBoard[info[1]].push({
                     taskId: info[2], title: info[3], status: info[4], estimatedPoints: Number(info[5]),
                 })
