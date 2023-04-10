@@ -64,7 +64,6 @@ function solve() {
     const checkCorrectInputs = (dataFromInput) => dataFromInput.every(item => item.value.trim().length !== 0)
 
     const clearInputFields = (dataFromInput => dataFromInput.forEach(x => x.value = ''))
-
     
     const deleteTaskBtnFunctionality = (event) => {
         const id = event.currentTarget.parentElement.parentElement.id
@@ -110,13 +109,13 @@ function solve() {
         createElement({
             tag: 'div',
             className: ['task-card-points'],
-            textContent: inputFields.points.value,
+            textContent: `Estimated at ${inputFields.points.value} pts`,
             parent: article
         })
         createElement({
             tag: 'div',
             className: ['task-card-assignee'],
-            textContent: inputFields.assignee.value,
+            textContent: `Assigned to: ${inputFields.assignee.value}`,
             parent: article
         })
         const div = createElement({
