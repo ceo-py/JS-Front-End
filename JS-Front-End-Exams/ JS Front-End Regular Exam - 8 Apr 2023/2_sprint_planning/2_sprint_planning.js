@@ -126,15 +126,15 @@ function solve() {
 //     const buttonLabels = {
 //         'Feature': {
 //             class: "feature",
-//             textContent: 'Feature: &#8865;'
+//             textContent: 'Feature &#8865;'
 //         },
 //         'Low Priority Bug': {
 //             class: "low-priority",
-//             textContent: 'Low Priority Bug: &#9737;'
+//             textContent: 'Low Priority Bug &#9737;'
 //         },
 //         'High Priority Bug': {
 //             class: "high-priority",
-//             textContent: 'High Priority Bug: &#9888;'
+//             textContent: 'High Priority Bug &#9888;'
 //         },
 //     }
 //
