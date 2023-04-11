@@ -6,7 +6,7 @@ function pianistCatalog(list) {
     const commands = {
         Add: (piece, composer, key) => {
         return catalog.hasOwnProperty(piece) ? `${piece} is already in the collection!` :
-            (catalog[piece] = new Piece(piece, composer, key),
+            (catalog[piece] = {piece, composer ,key},
                 `${piece} by ${composer} in ${key} added to the collection!`)},
 
         Remove: (piece) => {
@@ -14,41 +14,79 @@ function pianistCatalog(list) {
             : `Invalid operation! ${piece} does not exist in the collection.`},
 
         ChangeKey: (piece, key) => {
-        return catalog.hasOwnProperty(piece) ? (catalog[piece].changeKey(key),
+        return catalog.hasOwnProperty(piece) ? (catalog[piece].key = key,
                 `Changed the key of ${piece} to ${key}!`)
             : `Invalid operation! ${piece} does not exist in the collection.`}
     }
 
-
-    class Piece {
-        constructor(piece, composer, key) {
-            this.piece = piece
-            this.composer = composer
-            this.key = key
-        }
-
-        changeKey(newKey) {
-            this.key = newKey
-        }
-
-        printInfo() {
-             return`${this.piece} -> Composer: ${this.composer}, Key: ${this.key}`
-        }
-    }
 
     list.map((x, index) => {
         const data = x.split('|')
 
         if (index < numberPieces) {
 
-            catalog[data[0]] = new Piece(...data)
+            catalog[data[0]] = {piece: data[0], composer: data[1],key: data[2]}
         } else {
             console.log(commands[data.shift()](...data))
         }
     })
-    Object.values(catalog).forEach((piece) => console.log(piece.printInfo()))
+    Object.values(catalog).forEach((x) => console.log(`${x.piece} -> Composer: ${x.composer}, Key: ${x.key}`))
 
 }
+
+
+
+// function pianistCatalog(list) {
+//     const numberPieces = Number(list.shift())
+//     list.pop()
+//     let catalog = {}
+//
+//     const commands = {
+//         Add: (piece, composer, key) => {
+//         return catalog.hasOwnProperty(piece) ? `${piece} is already in the collection!` :
+//             (catalog[piece] = new Piece(piece, composer, key),
+//                 `${piece} by ${composer} in ${key} added to the collection!`)},
+//
+//         Remove: (piece) => {
+//         return catalog[piece] ? (delete catalog[piece], `Successfully removed ${piece}!`)
+//             : `Invalid operation! ${piece} does not exist in the collection.`},
+//
+//         ChangeKey: (piece, key) => {
+//         return catalog.hasOwnProperty(piece) ? (catalog[piece].changeKey(key),
+//                 `Changed the key of ${piece} to ${key}!`)
+//             : `Invalid operation! ${piece} does not exist in the collection.`}
+//     }
+//
+//
+//     class Piece {
+//         constructor(piece, composer, key) {
+//             this.piece = piece
+//             this.composer = composer
+//             this.key = key
+//         }
+//
+//         changeKey(newKey) {
+//             this.key = newKey
+//         }
+//
+//         printInfo() {
+//              return`${this.piece} -> Composer: ${this.composer}, Key: ${this.key}`
+//         }
+//     }
+//
+//     list.map((x, index) => {
+//         const data = x.split('|')
+//
+//         if (index < numberPieces) {
+//
+//             catalog[data[0]] = new Piece(...data)
+//         } else {
+//             console.log(commands[data.shift()](...data))
+//         }
+//     })
+//     Object.values(catalog).forEach((piece) => console.log(piece.printInfo()))
+//
+// }
 
 
 pianistCatalog(['3', 'Fur Elise|Beethoven|A Minor', 'Moonlight Sonata|Beethoven|C# Minor', 'Clair de Lune|Debussy|C# Minor', 'Add|Sonata No.2|Chopin|B Minor', 'Add|Hungarian Rhapsody No.2|Liszt|C# Minor', 'Add|Fur Elise|Beethoven|C# Minor', 'Remove|Clair de Lune', 'ChangeKey|Moonlight Sonata|C# Major', 'Stop'])
