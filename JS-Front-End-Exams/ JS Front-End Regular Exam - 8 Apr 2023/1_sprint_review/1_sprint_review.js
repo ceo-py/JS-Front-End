@@ -1,7 +1,5 @@
 function springReview(list) {
-
     const [assignee, initial_inputs] = [{}, Number(list.shift())]
-
     list.forEach((x, index) => {
             if (index < initial_inputs) {
                 const [assigneeName, taskId, title, status, estimatedPoints] = x.split(':').map(x => isNaN(x) ? x : Number(x))
@@ -11,14 +9,11 @@ function springReview(list) {
                 const [command, assigneeName, taskIdIndex, titleStatus, status, estimatedPoints] =  x.split(':').map(x => isNaN(x) ? x : Number(x))
                 if (!assignee.hasOwnProperty(assigneeName)) {
                     console.log(`Assignee ${assigneeName} does not exist on the board!`)
-
                 } else if (command === 'Add New') {
                     assignee[assigneeName].push({taskId: taskIdIndex, title: titleStatus, status, estimatedPoints})
-
                 } else if (command === 'Change Status') {
                     const foundTask = assignee[assigneeName].filter(x => x.taskId === taskIdIndex)[0]
                     foundTask ? foundTask.status = titleStatus : console.log(`Task with ID ${taskIdIndex} does not exist for ${assigneeName}!`)
-
                 } else if (command === 'Remove Task') {
                     const index = Number(taskIdIndex)
                     index < 0 || index >= assignee[assigneeName].length ? console.log('Index is out of range!') : assignee[assigneeName].splice(index, 1)
@@ -26,17 +21,10 @@ function springReview(list) {
             }
         }
     )
-
-    const score = {
-        'ToDo': 0,
-        'In Progress': 0,
-        'Code Review': 0,
-        'Done': 0
-    }
+    const score = {'ToDo': 0, 'In Progress': 0, 'Code Review': 0, 'Done': 0}
     for (const key in assignee) assignee[key].forEach(x => score[x.status] += x.estimatedPoints)
     Object.keys(score).forEach(x => x !== 'Done' ? console.log(`${x}: ${score[x]}pts`) : console.log(`${x} Points: ${score[x]}pts`))
-    score.Done >= score.ToDo + score["In Progress"] + score["Code Review"] ? console.log('Sprint was successful!') : console.log('Sprint was unsuccessful...');
-
+    score.Done >= score.ToDo + score["In Progress"] + score["Code Review"] ? console.log('Sprint was successful!') : console.log('Sprint was unsuccessful...')
 }
 
 
