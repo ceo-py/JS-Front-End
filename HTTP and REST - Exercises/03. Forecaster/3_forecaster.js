@@ -71,3 +71,115 @@ async function attachEvents() {
     });
 }
 attachEvents();
+
+
+
+
+
+
+// function attachEvents() {
+//     const [inputField, weatherBtn] = document.querySelectorAll('input')
+//     const forecast = document.querySelector('#forecast')
+//     const current = document.querySelector('#current')
+//     const upcoming = document.querySelector('#upcoming')
+//
+//     const APILocation = 'http://localhost:3030/jsonstore/forecaster/locations'
+//     const APIToday = 'http://localhost:3030/jsonstore/forecaster/today/'
+//     const APIUpcoming = 'http://localhost:3030/jsonstore/forecaster/upcoming/'
+//
+//     const weatherIcons = {
+//         'Sunny': '&#x2600', // ☀
+//         'Partly sunny': '&#x26C5', // ⛅
+//         'Overcast': '&#x2601', // ☁
+//         'Rain': '&#x2614', // ☂
+//         'Degrees': '&#176',   // °
+//
+//     }
+//
+//     function findLocation(l, locations) {
+//         return locations.filter(x => x.name === l)
+//     }
+//
+//     function errorMsg() {
+//
+//         current.innerHTML = `
+//                 <div class="label">Current conditions</div>
+//                 <div class="forecasts">
+//                     <span class="condition symbol"></span>
+//                     <span class="condition">
+//                         <span class="forecast-data">Error</span>
+//                     </span>
+//                 </div>`
+//         upcoming.innerHTML = ``
+//     }
+//
+//     function currentCondition(today) {
+//         current.innerHTML = `
+//                 <div class="label">Current conditions</div>
+//                 <div class="forecasts">
+//                     <span class="condition symbol">${weatherIcons[today.forecast.condition]}</span>
+//                     <span class="condition">
+//                         <span class="forecast-data">${today.name}</span>
+//                         <span class="forecast-data">${today.forecast.low}°/${today.forecast.high}°</span>
+//                         <span class="forecast-data">${today.forecast.condition}</span>
+//                     </span>
+//                 </div>`
+//     }
+//
+//     function upcomingWeather(upcomingData) {
+//         upcoming.innerHTML =
+//             `
+//             <div class="label">Three-day forecast</div>
+//             <div class="forecast-info">
+//             <span class="upcoming">
+//             <span class="symbol">${weatherIcons[upcomingData.forecast[0].condition]}</span>
+//             <span class="forecast-data">${upcomingData.forecast[0].low}°/${upcomingData.forecast[0].high}°</span>
+//             <span class="forecast-data">${upcomingData.forecast[0].condition}</span>
+//             </span>
+//
+//             <span class="upcoming">
+//             <span class="symbol">${weatherIcons[upcomingData.forecast[1].condition]}</span>
+//             <span class="forecast-data">${upcomingData.forecast[1].low}°/${upcomingData.forecast[1].high}°</span>
+//             <span class="forecast-data">${upcomingData.forecast[1].condition}</span>
+//             </span>
+//
+//             <span class="upcoming">
+//             <span class="symbol">${weatherIcons[upcomingData.forecast[2].condition]}</span>
+//              <span class="forecast-data">${upcomingData.forecast[2].low}°/${upcomingData.forecast[2].high}°</span>
+//             <span class="forecast-data">${upcomingData.forecast[2].condition}</span>
+//             </span>
+//         </div>`
+//
+//     }
+//
+//     async function getWeather() {
+//         try {
+//             forecast.style.display = 'block'
+//             const response = await fetch(APILocation)
+//             const locations = await response.json()
+//             const location = findLocation(inputField.value, locations)[0]
+//             if (location.length === 0) {
+//                 errorMsg()
+//                 return
+//             }
+//             const responseToday = await fetch(`${APIToday}${location.code}`)
+//             const todayData = await responseToday.json()
+//
+//             const responseUpcoming = await fetch(`${APIUpcoming}${location.code}`)
+//             const upcomingData = await responseUpcoming.json()
+//
+//
+//             currentCondition(todayData)
+//             upcomingWeather(upcomingData)
+//
+//         } catch (err) {
+//             errorMsg()
+//         }
+//
+//
+//     }
+//
+//     weatherBtn.addEventListener('click', getWeather)
+// }
+//
+// attachEvents();
