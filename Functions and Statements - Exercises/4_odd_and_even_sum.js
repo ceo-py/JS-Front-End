@@ -2,6 +2,7 @@ function solve(numbers){
     let oddNumbers = 0
     let evenNumbers = 0;
     [...numbers.toString()].map(Number).forEach(n => n % 2 === 0? evenNumbers += n: oddNumbers += n)
+    // [...numbers.toString()].forEach(n => Number(n) % 2 === 0? evenNumbers += Number(n): oddNumbers += Number(n))
     console.log(`Odd sum = ${oddNumbers}, Even sum = ${evenNumbers}`)
 }
 
