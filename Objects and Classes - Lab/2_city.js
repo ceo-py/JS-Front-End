@@ -1,15 +1,19 @@
-
-function solve(dict){
-
-    // for (const key in dict) {
-    //     console.log(`${key}: ${dict[key]}`);
-    // }
-
-    for (const [key, value] of Object.entries(dict)) {
-        console.log(`${key} -> ${value}`)
-
-    }
+function solve(dict) {
+    Object.keys(dict).map(key => console.log(`${key} -> ${dict[key]}`))
 }
+
+
+// function solve(dict){
+//
+//     // for (const key in dict) {
+//     //     console.log(`${key}: ${dict[key]}`);
+//     // }
+//
+//     for (const [key, value] of Object.entries(dict)) {
+//         console.log(`${key} -> ${value}`)
+//
+//     }
+// }
 
 
 solve({
