@@ -1,27 +1,44 @@
 function solve(list) {
-    class Song {
-        constructor(typeList, name, time) {
-            this.typeList = typeList;
-            this.name = name;
-            this.time = time;
-        }
-
-        prinName(typeSong) {
-            if (this.typeList === typeSong || lfSong === 'all') {
-                console.log(this.name)
+    const song = (typeList, name, time) => {
+        return {
+            typeList, name, time,
+            prinName: (lfSong) => {
+                if (typeList === lfSong || lfSong === 'all') {
+                    console.log(name)
+                }
             }
         }
     }
-
-    let songs = list.shift()
+    list.shift()
     let lfSong = list.pop()
-
-    for (let i = 0; i < songs; i++) {
-        let [type, name, time] = list[i].split('_')
-        let song = new Song(type, name, time)
-        song.prinName(lfSong)
-    }
+    list.forEach(x => song(...x.split('_')).prinName(lfSong))
 }
+
+
+// function solve(list) {
+//     class Song {
+//         constructor(typeList, name, time) {
+//             this.typeList = typeList;
+//             this.name = name;
+//             this.time = time;
+//         }
+//
+//         prinName(typeSong) {
+//             if (this.typeList === typeSong || lfSong === 'all') {
+//                 console.log(this.name)
+//             }
+//         }
+//     }
+//
+//     let songs = list.shift()
+//     let lfSong = list.pop()
+//
+//     for (let i = 0; i < songs; i++) {
+//         let [type, name, time] = list[i].split('_')
+//         let song = new Song(type, name, time)
+//         song.prinName(lfSong)
+//     }
+// }
 
 // solve([3,
 //     'favourite_DownTown_3:14',
@@ -38,7 +55,4 @@ function solve(list) {
 //     'listenLater'])
 
 
-solve([2,
-    'like_Replay_3:15',
-    'ban_Photoshop_3:48',
-    'all'])
+solve([2, 'like_Replay_3:15', 'ban_Photoshop_3:48', 'all'])
