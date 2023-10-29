@@ -1,20 +1,31 @@
 function addItem() {
-    const newItemText = document.getElementById("newItemText")
-    const listItems = document.getElementById("items")
-    listItems.addEventListener('click', deleteItem)
-
-
-    if (newItemText !== "") {
-        const newItem = document.createElement("li");
-        newItem.innerHTML = `${newItemText.value} <a href="#">[Delete]</a>`
-        listItems.appendChild(newItem)
-        document.getElementById("newItemText").value = ""
-    }
-
-    function deleteItem(item) {
-        item.target.parentNode.remove()
-    }
+    const newItemText = document.querySelector('#newItemText')
+    const items = document.querySelector('#items')
+    newItemText.value !== ''? items.innerHTML += `<li>${newItemText.value} <a href="#">[Delete]</a></li>`: null
+    const deleteItem = (e) => e.target.parentNode.remove()
+    items.addEventListener('click', deleteItem)
+    newItemText.value = ''
 }
+
+
+
+// function addItem() {
+//     const newItemText = document.getElementById("newItemText")
+//     const listItems = document.getElementById("items")
+//     listItems.addEventListener('click', deleteItem)
+//
+//
+//     if (newItemText !== "") {
+//         const newItem = document.createElement("li");
+//         newItem.innerHTML = `${newItemText.value} <a href="#">[Delete]</a>`
+//         listItems.appendChild(newItem)
+//         document.getElementById("newItemText").value = ""
+//     }
+//
+//     function deleteItem(item) {
+//         item.target.parentNode.remove()
+//     }
+// }
 
 
 
