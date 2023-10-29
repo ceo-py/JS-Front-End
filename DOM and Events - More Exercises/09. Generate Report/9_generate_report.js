@@ -25,5 +25,5 @@ function generateReport() {
         }
     })
     addFields()
-    output.value = JSON.stringify(resultOutput)
+    output.value = Object.values(resultOutput[0]).length > 0 ? JSON.stringify(resultOutput): ''
 }
