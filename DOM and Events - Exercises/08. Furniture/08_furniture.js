@@ -29,7 +29,7 @@ function solve() {
             newRow.appendChild(p(input[x]['name']))
             newRow.appendChild(p(input[x]['price']))
             newRow.appendChild(p(input[x]['decFactor']))
-            
+
             let td = document.createElement('td')
             let checkbox = document.createElement('input')
             checkbox.setAttribute("type", "checkbox")
@@ -58,3 +58,28 @@ function solve() {
         }
     }
 }
+
+
+
+
+
+// function solve() {
+//     const [generateBtn, buyBtn] = [...document.querySelectorAll('button')]
+//     const generatedTextarea = document.querySelector('textarea')
+//     const table = document.querySelector('tbody')
+//     let [totalPrice, decFactorFinal, products] = [0, 0, []]
+//
+//     generateBtn.addEventListener('click', () => {
+//         const dataJson = JSON.parse(generatedTextarea.value)
+//         dataJson.forEach(x => table.innerHTML += `<tr><td><img src="${x.img}"></td><td><p>${x.name}</p></td><td><p>${x.price}</p></td><td><p>${x.decFactor}</p></td><td><input type="checkbox"/></td></tr>`);
+//             [...document.querySelectorAll('input[type="checkbox"]')].forEach(x => x.addEventListener('click', (e) => {
+//                 const [name, price, decFactor] = [...e.target.parentNode.parentNode.querySelectorAll('p')].map(x => x.textContent)
+//                 e.target.checked ? [totalPrice += parseFloat(price), decFactorFinal += parseFloat(decFactor), products.push(name)]:
+//                                                 [totalPrice -= parseFloat(price), decFactorFinal -= parseFloat(decFactor), products.splice(name, 1)]
+//             }))
+//     })
+//
+//     buyBtn.addEventListener('click', () => {
+//         document.querySelector('textarea[rows="4"]').value = `Bought furniture: ${products.join(', ')}\nTotal price: ${totalPrice.toFixed(2)}\nAverage decoration factor: ${decFactorFinal / products.length}`
+//     })
+// }
