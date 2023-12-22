@@ -1,6 +1,6 @@
 function cafeteria(list) {
     const cafe = {}
-    const initialInput = list.shift()
+    list.shift()
 
     const cafeCommands = {
         Prepare: (name, shift, type) => {
@@ -10,14 +10,12 @@ function cafeteria(list) {
 
             }
             return `${name} is not available to prepare a ${type}.`
-        },
-        "Change Shift": (name, shift) => {
+        }, "Change Shift": (name, shift) => {
             const oldShiftMenu = Object.values(cafe[name])
-            cafe[name] = {[shift]: oldShiftMenu}
+            cafe[name] = {[shift]: oldShiftMenu[0]}
             return `${name} has updated his shift to: ${shift}`
-        },
-        Learn: (name, type) => {
-            if (Object.values(cafe[name]).includes(type)) {
+        }, Learn: (name, type) => {
+            if (Object.values(cafe[name]).some(x => x.includes(type))) {
                 return `${name} knows how to make ${type}.`
             }
             Object.values(cafe[name]).map(x => x.push(type))
@@ -37,7 +35,20 @@ function cafeteria(list) {
         }
         input = list.shift()
     }
-    console.log(cafe)
+    for (const name in cafe) {
+        for (const shift in cafe[name]) {
+            console.log(`Barista: ${name}, Shift: ${shift}, Drinks: ${cafe[name][shift].join(', ')}`)
+        }
+    }
 }
 
-cafeteria(['3', 'Alice day Espresso,Cappuccino', 'Bob night Latte,Mocha', 'Carol day Americano,Mocha', 'Prepare / Alice / day / Espresso', 'Change Shift / Bob / night', 'Learn / Carol / Latte', 'Learn / Bob / Latte', 'Prepare / Bob / night / Latte', 'Closed'])
+// cafeteria(['3', 'Alice day Espresso,Cappuccino', 'Bob night Latte,Mocha', 'Carol day Americano,Mocha', 'Prepare / Alice / day / Espresso', 'Change Shift / Bob / night', 'Learn / Carol / Latte', 'Learn / Bob / Latte', 'Prepare / Bob / night / Latte', 'Closed'])
+cafeteria(['4',
+'Alice day Espresso,Cappuccino',
+'Bob night Latte,Mocha',
+'Carol day Americano,Mocha',
+'David night Espresso',
+'Change Shift / Bob / day',
+'Prepare / Carol / day / Cappuccino',
+'Learn / Bob / Mocha',
+'Closed'])
