@@ -26,11 +26,11 @@ function encodedCryptocurrency(list) {
             const reversedString = [...substring].reverse().join('');
             ========
             function reverseString(str) {
-            if (str === '') {
-                return str;
-            } else {
-                return reverseString(str.substr(1)) + str[0];
-            }
+                if (str === '') {
+                    return str;
+                } else {
+                    return reverseString(str.substr(1)) + str[0];
+                }
             }
             const reversedString = reverseString(substring);
             ========
