@@ -11,11 +11,15 @@ function solve() {
     }
 
     const body = (id) => {
-        const bodyRaw = {
-            gift: christmasGifts.inputFields[0].value,
-            for: christmasGifts.inputFields[1].value,
-            price: christmasGifts.inputFields[2].value,
-        }
+        const bodyRaw = {}
+        christmasGifts.inputFields.forEach(x => bodyRaw[x.name] = x.value)
+
+        // const bodyRaw = {
+        //     gift: christmasGifts.inputFields[0].value,
+        //     for: christmasGifts.inputFields[1].value,
+        //     price: christmasGifts.inputFields[2].value,
+        // }
+
         if (id) bodyRaw._id = id
         return JSON.stringify(bodyRaw)
     }
