@@ -14,6 +14,28 @@ function encodedCryptocurrency(list) {
             if (!initialMessage.includes(substring)) return "error"
             initialMessage = initialMessage.replace(substring, '')
             initialMessage += substring.split('').reverse().join('')
+            /*
+            6 more reverse methods
+            let reversedString = '';
+            for (let i = substring.length - 1; i >= 0; i--) {
+                reversedString += substring[i];
+            }
+            ========
+            const reversedString = Array.from(substring).reverse().join('');
+            ========
+            const reversedString = [...substring].reverse().join('');
+            ========
+            function reverseString(str) {
+            if (str === '') {
+                return str;
+            } else {
+                return reverseString(str.substr(1)) + str[0];
+            }
+            }
+            const reversedString = reverseString(substring);
+            ========
+            const reversedString = substring.split('').reduce((acc, char) => char + acc, '');
+             */
             return initialMessage
         }
     }
@@ -35,10 +57,10 @@ function encodedCryptocurrency(list) {
 // "Buy"])
 
 encodedCryptocurrency(["PZDfA2PkAsakhnefZ7aZ",
-"TakeEven",
-"TakeEven",
-"TakeEven",
-"ChangeAll?Z?X",
-"ChangeAll?A?R",
-"Reverse?PRX",
-"Buy"])
+    "TakeEven",
+    "TakeEven",
+    "TakeEven",
+    "ChangeAll?Z?X",
+    "ChangeAll?A?R",
+    "Reverse?PRX",
+    "Buy"])
