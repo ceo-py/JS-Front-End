@@ -13,13 +13,6 @@ function solve() {
     const body = (id) => {
         const bodyRaw = {}
         christmasGifts.inputFields.forEach(x => bodyRaw[x.name] = x.value)
-
-        // const bodyRaw = {
-        //     gift: christmasGifts.inputFields[0].value,
-        //     for: christmasGifts.inputFields[1].value,
-        //     price: christmasGifts.inputFields[2].value,
-        // }
-
         if (id) bodyRaw._id = id
         return JSON.stringify(bodyRaw)
     }
@@ -67,9 +60,7 @@ function solve() {
                 christmasGifts.giftList.innerHTML += `
                 <div class="gift-sock">
                   <div class="content">
-                    <p>${x.gift}</p>
-                    <p>${x.for}</p>
-                    <p>${x.price}</p>
+                    ${Object.values(x).slice(0, -1).map(n => `<p>${n}</p>`).join('')}
                   </div>
                   <div class="buttons-container">
                     <button class="change-btn" id="${x._id}" onclick="funcJs.changePresentBtnHandler(this)">Change</button>
