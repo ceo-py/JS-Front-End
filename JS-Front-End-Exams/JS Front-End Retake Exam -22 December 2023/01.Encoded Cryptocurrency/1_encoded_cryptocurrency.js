@@ -4,13 +4,9 @@ function encodedCryptocurrency(list) {
     const commands = {
         TakeEven: () => {
             initialMessage = Array.from(initialMessage).filter((x, i) => i % 2 === 0).join('')
-            return initialMessage
-        },
-        ChangeAll: (substring, replacement) => {
+        }, ChangeAll: (substring, replacement) => {
             initialMessage = initialMessage.replace(new RegExp(substring, 'g'), replacement)
-            return initialMessage
-        },
-        Reverse: (substring) => {
+        }, Reverse: (substring) => {
             if (!initialMessage.includes(substring)) return "error"
             initialMessage = initialMessage.replace(substring, '')
             initialMessage += substring.split('').reverse().join('')
@@ -36,13 +32,12 @@ function encodedCryptocurrency(list) {
             ========
             const reversedString = substring.split('').reduce((acc, char) => char + acc, '');
              */
-            return initialMessage
         }
     }
 
     while (command !== 'Buy') {
         const [getCommand, ...data] = command.split('?')
-        console.log(commands[getCommand](...data))
+        console.log(commands[getCommand](...data)? 'error' : initialMessage)
         command = list.shift()
     }
     console.log(`The cryptocurrency is: ${initialMessage}`)
@@ -56,11 +51,4 @@ function encodedCryptocurrency(list) {
 // "ChangeAll?z?i",
 // "Buy"])
 
-encodedCryptocurrency(["PZDfA2PkAsakhnefZ7aZ",
-    "TakeEven",
-    "TakeEven",
-    "TakeEven",
-    "ChangeAll?Z?X",
-    "ChangeAll?A?R",
-    "Reverse?PRX",
-    "Buy"])
+encodedCryptocurrency(["PZDfA2PkAsakhnefZ7aZ", "TakeEven", "TakeEven", "TakeEven", "ChangeAll?Z?X", "ChangeAll?A?R", "Reverse?PRX", "Buy"])
