@@ -28,7 +28,7 @@ function solve() {
     const handleOk = (e) => {
         const currentElement = e.target.parentNode.parentNode
         expenseTracker.previewList.innerHTML = '';
-        [...currentElement.querySelectorAll('button')].forEach(x => x.remove())
+        currentElement.querySelector('.buttons').remove()
         expenseTracker.expensesList.appendChild(currentElement)
         expenseTracker.addBtn.disabled = false
     }
