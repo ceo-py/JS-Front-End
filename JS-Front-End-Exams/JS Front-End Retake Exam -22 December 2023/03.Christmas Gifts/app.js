@@ -10,6 +10,8 @@ function solve() {
         itemId: null
     }
 
+    const changeBtnAction = () => [christmasGifts.addPresentBtn.disabled = !christmasGifts.addPresentBtn.disabled, christmasGifts.editPresentBtn.disabled = !christmasGifts.editPresentBtn.disabled]
+
     const body = (id) => {
         const bodyRaw = {}
         christmasGifts.inputFields.forEach(x => bodyRaw[x.name] = x.value)
@@ -33,8 +35,7 @@ function solve() {
         fetch(`${API_URL}${ItemId}`, {
             method: 'PUT', body: body(ItemId)
         }).then(() => loadPresentBtnHandler())
-        christmasGifts.addPresentBtn.disabled = false
-        christmasGifts.editPresentBtn.disabled = true
+        changeBtnAction()
         christmasGifts.form.reset()
     }
 
@@ -43,15 +44,10 @@ function solve() {
         christmasGifts.itemId = e.id;
         [...currentItem.querySelectorAll('p')].forEach((x, i) => christmasGifts.inputFields[i].value = x.textContent)
         christmasGifts.giftList.removeChild(currentItem)
-        christmasGifts.addPresentBtn.disabled = true
-        christmasGifts.editPresentBtn.disabled = false
+        changeBtnAction()
     }
 
-    const deletePresentBtnHandler = (e) => {
-        fetch(`${API_URL}${e.id}`, {
-            method: 'DELETE'
-        }).then(() => loadPresentBtnHandler())
-    }
+    const deletePresentBtnHandler = (e) => fetch(`${API_URL}${e.id}`, {method: 'DELETE'}).then(() => loadPresentBtnHandler())
 
     const loadPresentBtnHandler = () => {
         christmasGifts.giftList.innerHTML = ''
