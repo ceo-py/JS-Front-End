@@ -12,3 +12,5 @@
 | [HTTP and AJAX-Exercise](https://www.youtube.com/watch?v=DHEpU_BeXOs&list=PLtrqz5Y_ckijx70axQ8MUXXuypiQArSC_&index=1&ab_channel=AKA)  | [JS Front-End Retake Exam - 20 Apr 2023](https://www.youtube.com/watch?v=BnW7xCkM4Dc&list=PLtrqz5Y_ckiiJ6f4DPiCtF0FNDfSvdVIj&index=1&t=22s&ab_channel=AKA) |
 |   | [JS Front-End Regular Exam - 5 Aug 2023](https://www.youtube.com/watch?v=JdIZWylcJjc&list=PLtrqz5Y_ckihn8iFfeMRK40malGhXrAhN&ab_channel=AKA) |
 |   | [JS Front-End Retake Exam - 17 August 2023](https://www.youtube.com/watch?v=bLtcXWeceyo&list=PLtrqz5Y_ckig2OW0smIzAt3HciuEdPHJ6&ab_channel=AKA) |
+|   | [JS Front-End Regular Exam - 16 Dec 2023](https://www.youtube.com/watch?v=2XFbzdsvxDg&list=PLtrqz5Y_ckijUyC0Wpc5nlMe913K_WaiJ&ab_channel=AKA) |
+|   | [JS Front-End Retake Exam -22 December 2023](https://www.youtube.com/watch?v=-OB4dkp6xLg&list=PLtrqz5Y_ckigkhYU8AjfPedACkra4DGhd&ab_channel=AKA) |
