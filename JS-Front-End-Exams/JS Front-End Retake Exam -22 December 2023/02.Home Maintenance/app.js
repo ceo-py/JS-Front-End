@@ -29,7 +29,8 @@ function solve() {
         homeMaintenance.taskList.innerHTML = `
         <li class="clean-task">
             <article>
-                ${homeMaintenance.inputFields.map(x => `<p>${x.id.charAt(0).toUpperCase() + x.id.slice(1)}:${x.value}</p>`).join('')}
+                // ${homeMaintenance.inputFields.map(x => `<p>${x.id.charAt(0).toUpperCase() + x.id.slice(1)}:${x.value}</p>`).join('')}
+                ${homeMaintenance.inputFields.map(x => `<p>${x.placeholder}:${x.value}</p>`).join('')}
             </article>
             <div class="buttons">
                 <button class="edit">Edit</button>
