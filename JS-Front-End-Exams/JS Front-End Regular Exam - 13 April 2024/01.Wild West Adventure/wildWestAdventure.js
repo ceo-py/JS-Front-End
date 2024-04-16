@@ -24,8 +24,8 @@ function wildWestAdventure(input) {
       return `${name} took a hit for ${damage} HP from ${attacker} and now has ${heroes[name].health} HP!`;
     },
     Reload: (name) => {
-      if (heroes[name].bullets < 6) {
-        const reloadingBullets = 6 - heroes[name].bullets;
+      const reloadingBullets = 6 - heroes[name].bullets;
+      if (reloadingBullets !== 0) {
         heroes[name].bullets = 6;
         return `${name} reloaded ${reloadingBullets} bullets!`;
       }
@@ -54,13 +54,4 @@ function wildWestAdventure(input) {
     );
   }
 }
-wildWestAdventure([
-  "2",
-  "Jesse 100 4",
-  "Walt 100 5",
-  "FireShot - Jesse - Bandit",
-  "TakeHit - Walt - 30 - Bandit",
-  "PatchUp - Walt - 20",
-  "Reload - Jesse",
-  "Ride Off Into Sunset",
-]);
+
