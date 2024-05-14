@@ -15,3 +15,4 @@
 |   | [JS Front-End Regular Exam - 16 Dec 2023](https://www.youtube.com/watch?v=2XFbzdsvxDg&list=PLtrqz5Y_ckijUyC0Wpc5nlMe913K_WaiJ&ab_channel=AKA) |
 |   | [JS Front-End Retake Exam -22 December 2023](https://www.youtube.com/watch?v=-OB4dkp6xLg&list=PLtrqz5Y_ckigkhYU8AjfPedACkra4DGhd&ab_channel=AKA) |
 |   | [JS Front-End Regular Exam - 13 April 2024](https://www.youtube.com/watch?v=jOdV_0IcxWA&list=PLtrqz5Y_ckigVhN21tK86kbu-IS7rLMMq&index=1&ab_channel=AKA) |
+|   | [JS Front-End Retake Exam - 19 April 2024](https://www.youtube.com/watch?v=Q3B1_OOE98w&list=PLV0e0d_ZUColpDOqDbg88mMOhu6Uyhz_a&index=2&ab_channel=iCodeExample) |
