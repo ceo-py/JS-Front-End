@@ -9,7 +9,7 @@ function scienceExperimentation(input) {
   });
   const commands = {
     Mix: (chemicalOne, chemicalTwo, amount) => {
-      // if (labChemical[chemicalOne] < amount || labChemical[chemicalTwo] < amount)
+      // if (labChemical[chemicalOne].amount < amount || labChemical[chemicalTwo].amount < amount)
       const currentChemical = [chemicalOne, chemicalTwo];
       if (currentChemical.some((c) => labChemical[c].amount < amount)) {
         return `Insufficient quantity of ${chemicalOne}/${chemicalTwo} to mix.`;
