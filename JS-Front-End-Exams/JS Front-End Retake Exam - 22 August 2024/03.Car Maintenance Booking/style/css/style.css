@@ -1,0 +1,300 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lora:ital,wght@0,400..700;1,400..700&family=Odibee+Sans&family=Rowdies:wght@300;400;700&display=swap');
+body {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    flex-direction: column;
+    background: linear-gradient(#e6e6e6, #bbbbbb);
+    background-position: 0% 90%;
+    background-image: url("../img/bg.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    font-family: "Rowdies", sans-serif;
+    margin: 0;
+}
+
+main {
+    display: flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    gap: 29px;
+    margin-top: 60px;
+}
+
+body>h1 {
+color: #ffffff;
+text-shadow: #030303 3px 3px;
+margin: 0;
+font-size: 54px;
+font-family: 'Julee', cursive;
+margin-top: -12px;
+margin-bottom: 10px;
+}
+
+#main-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 900px;
+    height: 135px;
+    border-radius: 10px;
+    box-shadow: 10px 14px 28px rgb(0, 0, 0), 10px 10px 10px rgba(0, 0, 0, 0.22);
+    background-image: url(../img/traces.png);
+    background-position: center;
+    margin-top: -60px;
+}
+
+#form {
+    width: 860px;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+}
+
+
+#form>h1 {
+background-color: black;
+    padding: 4px 20px;
+    border-radius: 10px;
+    margin-top: -1.2em;
+    color: rgb(216, 225, 198);
+}
+
+label {
+    margin-top: 4px;
+    color: rgb(216, 225, 198);
+    font-weight: bold;
+    background-color: black;
+    border-radius: 10px;
+    padding: 0px 10px;
+}
+input {
+    height: 15px;
+    border-radius: 10px;
+    padding: 5px 10px;
+}
+
+select{
+    height: 28px;
+    border-radius: 10px;
+    padding: 5px 10px;
+}
+#btn-appointment{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    
+}
+#form #add-appointment, #edit-appointment {
+    background: rgb(0, 0, 0);
+    color: white;
+    font-family: "Rowdies", sans-serif;
+    border-radius: 50px;
+    padding: 5px;
+    border: 3px solid  rgb(255, 255, 255);
+    font-weight: 400;
+    font-size: 12pt;
+    margin-top: 10px;
+    
+}
+
+#form #edit-appointment:disabled {
+    background-color: #bbbbbb;
+}
+
+#form #add-appointment:disabled {
+    background-color: #bbbbbb;
+}
+
+
+#form #add-appointment:hover {
+    background: white;
+    box-shadow: 0 0 0 3px #4183d7;
+    color:black;
+}
+
+#form input {
+    width: 130px;
+}
+
+.appointment .change-btn,
+.appointment .delete-btn {
+    background: rgb(0, 0, 0);
+    color: white;
+    font-family: "Rowdies", sans-serif;
+    border-radius: 50px;
+    padding: 6.5px;
+    width: 60px;
+    border: none;
+    border-radius: 50px;
+    color: rgb(255, 255, 255);
+    font-weight: 600;
+    font-size: 9pt;
+    margin: 10px;
+    margin-bottom: 5px;
+    margin-top: 30px;
+    
+}
+
+button {
+    cursor: pointer;
+}
+
+
+.buttons{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.change-btn:hover,
+.delete-btn:hover {
+    background: white;
+    box-shadow: 0 0 0 3px #4183d7;
+    color:black;
+}
+
+ #load-appointments {
+    background: rgb(0, 0, 0);
+    color: white;
+    font-family: "Rowdies", sans-serif;
+    border-radius: 50px;
+    padding: 6.5px;
+    width: 140px;
+    font-weight: 600;
+    font-size: 9pt;
+    margin-top: 1em;
+}
+
+.clear-btn:hover, #load-appointments:hover {
+    background: white;
+    box-shadow: 0 0 0 3px #4183d7;
+    color:black;
+}
+
+.change-btn:disabled,
+.delete-btn:disabled {
+    background: linear-gradient( 135deg, #bdbdbd 0%, #cfcfae 100%);
+}
+
+.change-btn:disabled:hover,
+.delete-btn:disabled:hover {
+    box-shadow: none;
+    color: #fcfcfc;
+}
+
+
+#appointments-list{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+   margin-top: 50px;
+position: relative;
+overflow-y: auto;
+white-space: nowrap;
+max-width: 90vw;
+}
+
+h2 {
+    padding: 5px;
+    margin-top: 0.5em;
+    color: rgb(3, 12, 131);
+    font-size: 23px;
+}
+
+#appointments {
+    height: 200px;
+    border-radius: 20px;
+    padding: 10px;
+    margin-bottom: 2em;
+}
+
+#appointments>h2,
+#finished-course>h2 {
+    font-size: 20px;
+}
+
+.appointment {
+    height: 200px;
+    width: 200px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+background-image: url('../img/item-bg.png');
+background-repeat: no-repeat;   
+background-size: contain;
+background-position: center;
+    border-radius: 100%;
+    gap: 15px;
+}
+
+
+#wrapper {
+    justify-content: center;
+    display: flex;
+}
+
+.appointment {
+    text-align: center;
+   
+}
+
+.appointment>h2 {
+    color:rgb(255, 255, 255);
+    font-size: 17px;
+    text-align: center;
+    padding-left: 2px;
+    padding: 3.5px;
+    font-weight: 700;
+    margin-bottom: -0.7em;
+    margin-top: 0.8em;
+    background-color:  rgb(221 218 196);
+    border-radius: 10px;
+    text-shadow: 1px 1px black;
+    border-bottom: 2px solid black;
+}
+
+.appointment>h3 {
+    color: rgb(0, 0, 0);
+    font-size: 16px;
+    text-align: left;
+    padding-left: 2px;
+    padding: 5px;
+    font-weight: 700;
+    background-color:  rgb(221 218 196);
+    margin-bottom: -1.68em;
+    border-radius: 10px;
+}
+
+.appointment>h4 {
+    color: hsl(0, 0%, 0%);
+    font-size: 14px;
+    text-align: left;
+    padding: 5px;
+    font-weight: 600;
+    margin-bottom: -0.1em;
+    background-color: rgb(221 218 196);
+}
+
+@media (max-width: 900px) {
+    #main-container {
+        width: 500px;
+        height: 735px;
+    }
+    form{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+    #appointments-list{
+        flex-direction: column;
+    }
+    
+}

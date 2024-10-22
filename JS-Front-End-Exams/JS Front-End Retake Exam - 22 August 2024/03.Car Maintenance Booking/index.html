@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Car Maintenance Booking</title>
+    <link rel="stylesheet" href="./style/css/style.css" />
+  </head>
+
+  <body>
+    <h1>Car Maintenance Booking</h1>
+    <main>
+      <section id="main-container">
+        <div id="form">
+          <h1>Book a Service Appointment</h1>
+          <form>
+            <label for="car-model">Car Model:</label>
+            <input type="text" id="car-model" name="car-model" />
+
+            <label for="car-service">Choose Service:</label>
+            <select id="car-service" name="car-service">
+              <option value="" selected disabled>Select a service</option>
+              <option value="Oil Change">Oil Change</option>
+              <option value="Tire Rotation">Tire Rotation</option>
+              <option value="Brake Inspection">Brake Inspection</option>
+              <option value="Battery Replacement">Battery Replacement</option>
+              <option value="Wheel Alignment">Wheel Alignment</option>
+            </select>
+
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" />
+          </form>
+          <div id="btn-container">
+            <button id="add-appointment">Add Appointment</button>
+            <button id="edit-appointment" disabled>Edit Appointment</button>
+          </div>
+        </div>
+      </section>
+
+      <div id="wrapper">
+        <section id="appointments">
+          <button id="load-appointments">Load Appointments</button>
+          <ul id="appointments-list">
+            <!-- <li class="appointment">
+              <h2>Toyota Auris</h2>
+              <h3>2024-10-11</h3>
+              <h3>Battery Replacement</h3>
+              <div class="buttons-appointment">
+                <button class="change-btn">Change</button>
+                <button class="delete-btn">Delete</button>
+              </div>
+            </li> -->
+          </ul>
+        </section>
+      </div>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>
