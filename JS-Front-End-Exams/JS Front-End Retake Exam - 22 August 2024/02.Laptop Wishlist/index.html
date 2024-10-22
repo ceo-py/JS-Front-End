@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./css/styles.css" />
+  <title>New Laptop Wishlist</title>
+</head>
+  <body>
+    <h1>New Laptop Wishlist</h1>
+    <main id="main">
+      <div>
+        <div id="form-container" >
+
+          <form class="laptop-info">
+            <h1>Add Laptop</h1>
+           
+            <input type="text" placeholder="Laptop Model" id="laptop-model" />
+ 
+            <input type="number" placeholder="Storage Space" id="storage" />
+
+            <input type="number" placeholder="Price" id="price">
+
+            <button type="button" id="add-btn">Add</button>
+          </form>
+        </div>
+      </div>
+
+      <div id="check-list-container">
+        <div>
+          <div class="pc some">
+            <h2>Last Check:</h2>
+            <ul id="check-list"></ul>
+          </div>
+        </div>
+        <div id="laptops-container">
+          <div>
+            <div class="pc some wishlist">
+              <h2>Wishlist:</h2>
+              <ul id="laptops-list"></ul>
+              <button class="btn clear">Clear</button>
+            </div>
+          </div>
+        </div>
+      </div>
+        </main>
+        <script src="./app.js"></script>
+  </body>
+
+</html>
