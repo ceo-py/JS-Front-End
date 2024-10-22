@@ -62,12 +62,12 @@ function carMaintanance() {
       .then((response) => response.json())
       .then((data) => {
         cars.appointmentsList.innerHTML = "";
-        Object.keys(data).forEach((key) => {
+        Object.values(data).forEach((car) => {
           cars.appointmentsList.innerHTML += `
-            <li class="appointment" id="${data[key]._id}">
-              <h2>${data[key].model}</h2>
-              <h3>${data[key].date}</h3>
-              <h3>${data[key].service}</h3>
+            <li class="appointment" id="${car._id}">
+              <h2>${car.model}</h2>
+              <h3>${car.date}</h3>
+              <h3>${car.service}</h3>
               <div class="buttons-appointment">
                 <button class="change-btn" onclick="solve.changeAppointmentFunctionality(this)">Change</button>
                 <button class="delete-btn" onclick="solve.deleteAppointmentFunctionality(this)">Delete</button>
