@@ -7,22 +7,19 @@ function farmManagementSystem(input) {
   ];
   const commands = {
     Execute(name, workArea, task) {
-      const farmer = farmers[name];
-      return farmer.workArea === workArea && farmer.tasks.includes(task)
+      return farmers[name].workArea === workArea && farmers[name].tasks.includes(task)
         ? `${name} has executed the task: ${task}!`
         : `${name} cannot execute the task: ${task}.`;
     },
     "Change Area"(name, newWorkArea) {
-      const farmer = farmers[name];
-      farmer.workArea = newWorkArea;
+      farmers[name].workArea = newWorkArea;
       return `${name} has changed their work area to: ${newWorkArea}`;
     },
     "Learn Task"(name, newTask) {
-      const farmer = farmers[name];
-      if (farmer.tasks.includes(newTask)) {
+      if (farmers[name].tasks.includes(newTask)) {
         return `${name} already knows how to perform ${newTask}.`;
       }
-      farmer.tasks.push(newTask);
+      farmers[name].tasks.push(newTask);
       return `${name} has learned a new task: ${newTask}.`;
     },
   };
